@@ -91,6 +91,7 @@
       window.addEventListener('screenchange', this, true);
       window.addEventListener('home', this);
       window.addEventListener('batteryshutdown', this);
+      window.addEventListener('iac-rebootcomms', this); // add for Fling device
       this.elements.cancel.addEventListener('click', this);
 
       var self = this;
@@ -258,6 +259,11 @@
           if (this.visible) {
             this.hide();
           }
+          break;
+
+        case 'iac-rebootcomms': // add for Fling device
+          console.log("rebootcomms");
+          this._actualPowerOff(true);
           break;
 
         default:

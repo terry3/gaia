@@ -659,13 +659,14 @@
       }
     }
 
-    overlayClasses.add('volume');
-    classes.add('visible');
-    window.clearTimeout(activeTimeout);
-    activeTimeout = window.setTimeout(function hideSound() {
-      overlayClasses.remove('volume');
-      classes.remove('visible');
-    }, 1500);
+// for reset Fling device
+//    overlayClasses.add('volume');
+//    classes.add('visible');
+//    window.clearTimeout(activeTimeout);
+//    activeTimeout = window.setTimeout(function hideSound() {
+//      overlayClasses.remove('volume');
+//     classes.remove('visible');
+//    }, 1500);
 
     if (!window.navigator.mozSettings)
       return;

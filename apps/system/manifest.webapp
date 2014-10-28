@@ -45,6 +45,7 @@
     "nfc-manager":{},
     "downloads":{},
     "systemXHR":{},
+    "tcp-socket":{},
     "feature-detection": {}
   },
   "locales": {
@@ -99,6 +100,14 @@
     "ftucomms": {
       "description": "Communicate between communications/ftu and System",
       "rules": {}
+    },
+    "rebootcomms": {
+          "description": "Communicate homescreen for reboot",
+          "rules": {}
+    },
+    "pal-name-change": {
+        "rules": {},
+        "description": "Handle name change"
     },
     "bluetoothTransfercomms": {
       "description": "Communication with bluetooth apps for sending files info",
