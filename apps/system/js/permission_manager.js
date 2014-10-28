@@ -365,6 +365,8 @@
 
       var moreInfoText = _(permissionID + '-more-info');
       var self = this;
+
+      /*
       this.requestPermission(detail.id, detail.origin, this.permissionType,
         message, moreInfoText,
         function pm_permYesCB() {
@@ -375,6 +377,9 @@
           self.dispatchResponse(detail.id, 'permission-deny',
             self.remember.checked);
       });
+      */
+      // Allow all permission request in Fling devices. Need check whether it's necessary later!
+      this.dispatchResponse(detail.id, 'permission-allow', true);
     },
     /**
      * Send permission choice to gecko
