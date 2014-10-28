@@ -1,0 +1,225 @@
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+    <title>home</title>
+    <script type="text/javascript" src="shared/js/l10n.js"></script>
+    <script defer src="shared/js/iac_handler.js"></script>
+    <link rel="resource" type="application/l10n" href="locales/locales.ini">
+    <link rel="stylesheet" type="text/css" href="style/index.css"/>
+</head>
+<body>
+<div class="main">
+
+
+
+    <div id="setup_page" class="hide">
+    
+    
+        <div class="top">
+            <h1 class="top_one" data-l10n-id="cast_setup">Set up</h1>
+            <p class="setup_top_two" data-l10n-id="setup_visit">From your phone,tablet or laptop,visit: <span class="top_three" data-l10n-id="setup_visit_site">matchstick.tv/setup</span></p>
+        </div>
+        <div class="middle">
+            <img class="middle_one" src="style/images/ic_phone.png"/>
+            <img class="middle_two" src="style/images/ic_pad.png"/>
+            <img class="middle_two" src="style/images/ic_computer.png"/>  
+                  
+        </div>
+        
+        <img class="middle_three" src="style/images/matchstick-qrcode.png" width="240" height="240"/> 
+        
+        
+        <div class="footer">
+        	<div class="footer_main">
+        	<dl class="de">
+	        	<dt class="icon"><img src="style/images/cast_on.png" /></dt>
+	        	<dd id="setup_ssid" class="footer_one">MatchStick</dd>
+	        	<!--dd class="footer_tow">WIFI-Router <span class="wifi_icon_0"><img src="style/images/wifi_signal_0.png" /></span></dd-->       	
+        	</dl>
+        	<div class="logo"><img src="style/images/logo.png" /></div>
+        	
+        	</div>   
+        </div>
+        
+        
+        
+    </div>
+    
+    
+    
+    
+    
+
+    <div id="await_page" class="hide">
+        <div class="top">
+            <h1 class="top_one" data-l10n-id="cast_setup">Setup</h1>
+            <p class="setup_top_two" id="await_ssid_name" data-l10n-id="cast_wait">MatchStick is waiting for instructions</p>
+        </div>
+		<span class="key_code">T4N8</span>
+        <div class="footer">
+        	<div class="footer_main">
+				<dl class="de">
+					<dt class="icon"><img src="style/images/cast_on.png" /></dt>
+					<dd id="await_ssid" class="footer_one">MatchStick</dd>
+					<!--dd class="footer_tow">WIFI-Router <span class="wifi_icon_0"><img src="style/images/wifi_signal_0.png" /></span></dd-->       	
+				</dl>
+        	<div class="logo"><img src="style/images/logo.png" /></div>
+        	</div>   
+        </div>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+
+    <div id="connect_page" class="hide">
+        <div class="top">
+            <h1 class="top_one" id="connect_text" data-l10n-id="connect_wifi">Connecting</h1>
+            <p id="connect_ssid_name" class="setup_top_two" data-l10n-id="connect_status">MatchStick is connecting to Wi-Fi network</p>
+            
+        </div>
+        <span class="key_code">T4N8</span>
+        
+        <div class="footer">
+        	<div class="footer_main">
+        	<dl class="de">
+	        	<dt class="icon"><img src="style/images/cast_on.png" /></dt>
+	        	<dd id="connect_ssid" class="footer_one">MatchStick</dd>
+	        	<!--dd id="connect_wifi_name" class="footer_tow wifi_name">WIFI-Router <span><img src="style/images/wifi_signal_0.png" class="net_status"/></span></dd-->
+			<dd class="footer_tow wifi_name"><span id="connect_wifi_name">WIFI-Router</span> <span class="wifi_icon_0"><img src="style/images/wifi_signal_0.png" /></span></dd>
+			
+        	</dl>
+        	<div class="logo"><img src="style/images/logo.png" /></div>
+        	
+        	</div>   
+        </div>
+        
+        
+        
+       </div>
+    
+    
+    
+    
+    
+    
+    
+
+    <div id="reconnect_page" class="hide">
+        <div class="top">
+            <h1 class="top_one" data-l10n-id="cast_reconnect">Reconnect</h1>
+            <p id="reconnect_ssid_name" class="setup_top_two reconnect_top_two" data-l10n-id="reconnect_status">MatchStick cannot find Wi-Fi network</p>
+            
+
+            <p id="reconnect_help">
+                <span class="top_four" id="reconnect_help_one"
+                      data-l10n-id="reconnect_help_one">Please run the MatchStick APP to connect to a new network</span>
+                <span class="top_four" id="reconnect_help_two"
+                      data-l10n-id="reconnect_help_two">Or try to reconnct to the network</span>
+            </p>
+        </div>
+        
+        <span class="key_code">T4N8</span>
+        
+        <div class="footer">
+        	<div class="footer_main">
+        	<dl class="de">
+	        	<dt class="icon"><img src="style/images/cast_on.png" /></dt>
+	        	<dd id="reconnect_ssid" class="footer_one">MatchStick</dd>
+	        	<!--dd id="reconnect_wifi_name" class="footer_tow wifi_name">WIFI-Router <span><img src="style/images/wifi_signal_0.png" class="net_status"/></span></dd-->
+			<dd class="footer_tow wifi_name"><span id="reconnect_wifi_name">WIFI-Router</span> <span class="wifi_icon_0"><img src="style/images/wifi_signal_0.png" /></span></dd>
+        	</dl>
+        	<div class="logo"><img src="style/images/logo.png" /></div>
+        	
+        	</div>   
+        </div>
+        
+           </div>
+
+
+
+
+
+
+
+
+    <div id="connectfail_page" class="hide">
+        <div class="top">
+            <h1 class="top_one" data-l10n-id="cast_connectfail">Reconnect</h1>
+            <p id="connectfail_ssid_name" class="setup_top_two reconnect_top_two" data-l10n-id="connectfail_status">MatchStick cannot connect to Wi-Fi</p>
+            
+
+            <p id="connectfail_help">
+                <span class="top_four" id="connectfail_help_one"
+                      data-l10n-id="connectfail_help_one">Please run the MatchStick APP to confirm your Wi-Fi password</span>
+            </p>
+        </div>
+        
+        
+        <span class="key_code">T4N8</span>
+        
+        <div class="footer">
+        	<div class="footer_main">
+        	<dl class="de">
+	        	<dt class="icon"><img src="style/images/cast_on.png" /></dt>
+	        	<dd id="connectfail_ssid" class="footer_one">MatchStick</dd>
+	        	<!--dd id="connectfail_wifi_name" class="footer_tow wifi_name">WIFI-Router <span><img src="style/images/wifi_signal_0.png" class="net_status"/></span></dd-->
+			<dd class="footer_tow wifi_name"><span id="connectfail_wifi_name">WIFI-Router</span> <span class="wifi_icon_0"><img src="style/images/wifi_signal_0.png" /></span></dd>  	
+        	</dl>
+        	<div class="logo"><img src="style/images/logo.png" /></div>
+        	
+        	</div>   
+        </div>    
+        
+        </div>
+
+
+
+
+
+
+
+    <div id="ready_page" class="hide">
+        <div class="ready_one">
+            <h1 class="ready_top_one" data-l10n-id="cast_ready">Ready to Fling</h1>
+            <p class="ready_top_two" data-l10n-id="ready_visit">Learn more at: <span class="ready_top_three" data-l10n-id="learn_visit_site">matchstick.tv</span></p>
+        </div>
+        
+        <span id="ready_show_time"></span>
+        
+        <div class="footer">
+        	<div class="footer_main">
+        	<dl class="de">
+	        	<dt class="icon"><img id="ready_cast_icon" src="style/images/cast_on.png" /></dt>
+	        	<dd id="ready_ssid" class="footer_one">MatchStick</dd>
+	        	<!--dd id="ready_wifi_name" class="footer_tow wifi_name">WIFI-Router <span><img id="ready_wifi_icon" src="style/images/wifi_signal_4.png" class="net_status"/></span></dd-->
+			<!--img id="internet_status" src="style/images/internet_on.png" class="net_status"/-->
+			<dd class="footer_tow wifi_name"><span id="ready_wifi_name">WIFI-Router</span> <span class="wifi_icon_0"><img id="ready_wifi_icon" src="style/images/wifi_signal_4.png" /></span></dd>	
+        	</dl>
+        	<div class="logo"><img src="style/images/logo.png" /></div>
+        	</div>   
+        </div>    
+        
+        
+    </div>
+    
+    
+    
+    
+    
+    
+</div>
+<!--div id="version_ota" class="footer version"></div-->
+<span id="computeFontWidth"></span>
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript" src="js/netcast_db.js"></script>
+<script type="text/javascript" src="js/page_helper.js"></script>
+<script type="text/javascript" src="js/network_helper.js"></script>
+<script type="text/javascript" src="js/connection_service.js"></script>
+<script defer type="text/javascript" src="js/ota_client.js"></script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+/**
+ * Created by Liuxg@thundersoft.com.
+ */
+body {
+	font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background:#000 url(images/bg_default.png) no-repeat;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    color: #bababa;
+    font-size: 30px;  
+}
+
+h1,h2,h3,h4{font-weight: 400; margin: 0;}
+p{ margin: 5px 0 10px;}
+
+.main {margin: 3% 10% 0;}
+
+.footer {
+    position:fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    background:#000 url(images/line.png) no-repeat center top;  
+}
+
+
+.logo{float: right; margin-top: 40px;}
+.footer_main{margin: 5px 10%;}
+
+
+.top_one {
+    color: #fff;
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+.top_two {
+    margin-top: 1%;
+    font-size: 200%;
+    display: inline-block;
+    clear: left;
+    width: 100%;
+    text-overflow: clip;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.setup_top_two {
+    font-size: 36px;
+}
+
+.top_three {
+
+    color: #c16a10;
+}
+
+.top_four {
+ color: #c16a10;
+}
+
+.middle {
+margin-top: 50px;
+position: relative;
+ 
+}
+
+.middle_one {
+    margin-left: 0;
+}
+
+.middle_two {
+    margin-left: 7%;
+    margin-right: 0;
+}
+
+.middle_three,.key_code {
+    position:absolute;
+    right: 10%;
+    bottom:160px;
+    margin-top: 30%;
+}
+
+.key_code {
+    color: #c16a10;
+    font-size: 100px;
+    display: block;
+}
+
+
+dl.de{float: left;width: 50%;}
+dl.de dd{ margin-bottom: 10px;}
+
+dl dt.icon {
+    height: 95px;
+    float: left;
+    margin-right: 20px;
+}
+
+dl dd.footer_one {
+color: #fff;
+font-size: 36px;
+}
+dl dd.footer_tow{
+	color: #858585;
+	font-size: 30px;
+	height: 40px;
+	line-height: 40px;
+	vertical-align:middle;
+}
+
+
+
+
+
+
+
+.wifi {
+    float: left;
+    margin-left: 1%;
+    font-size: 232%;
+    display: inline-block;
+    width: 62%;
+    text-overflow: clip;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.wifi_name {
+  
+}
+
+.net_status {
+
+}
+
+.ready_one {
+    margin-top: 20%;
+    text-align: center;
+    display: block;
+    clear: both;
+}
+
+.ready_top_one {
+    font-size: 120px;
+    display: block;
+    clear: both;
+    color: #c16a10;
+    
+}
+
+.ready_top_two {
+font-size: 50px;
+}
+
+.ready_top_three {
+
+    color: #c16a10;
+}
+
+#ready_show_time {
+position: absolute;
+right: 10%;
+top:30px;
+    color: #fff;
+    font-size: 60px;
+    font-weight: 500;
+}
+
+
+.version {
+    font-size: 120%;
+    display: block;
+    bottom: 7%;
+}
+
+#ad_text {
+    width: 100%;
+    font-size: 250%;
+    text-align: center;
+    bottom: 0;
+    position: fixed;
+    display: none;
+}
+
+#ad_image {
+    left: 0;
+    top: 0;
+    right: 0;
+    position: fixed;
+    z-index: -1;
+    width: 100%;
+    display: none;
+}
+
+.hide {
+    display: none;
+}
+
+#computeFontWidth {
+    visibility: hidden;
+    white-space: nowrap;
+}

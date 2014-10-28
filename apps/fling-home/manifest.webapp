@@ -1,0 +1,77 @@
+{
+  "fullscreen": "true",
+  "name": "Homescreen",
+  "description": "Matchstick Homescreen",
+  "launch_path": "/index.html#root",
+  "type": "certified",
+  "role": "homescreen",
+  "developer": {
+    "name": "Infthink",
+    "url": "http://www.infthink.com"
+  },
+  "permissions": {
+    "mobileconnection":{},
+    "webapps-manage":{},
+    "systemXHR":{},
+    "settings":{
+       "access": "readwrite"
+    },
+    "open-remote-window":{},
+    "storage":{},
+    "device-storage:sdcard": {
+      "access": "readwrite"
+    },
+    "device-storage:videos":{
+      "access": "readwrite"
+    },
+    "device-storage:music": {
+      "access": "readwrite"
+    },
+    "device-storage:pictures": {
+      "access": "readwrite"
+    },
+    "geolocation": {},
+    "alarms": {},
+    "power":{},
+    "contacts":{ "access": "readonly" },
+    "tcp-socket":{},
+    "wifi-manage":{},
+    "time":{},
+    "browser": {},
+    "device-storage:sdcard":{ "access": "readwrite"}
+  },
+  "locales": {
+    "ar": {
+      "name": "الشاشة الرئيسية",
+      "description": "Fling الشاشة الرئيسية"
+    },
+    "en-US": {
+      "name": "Homescreen",
+      "description": "Fling Homescreen"
+    },
+    "fr": {
+      "name": "Écran d’accueil",
+      "description": "Écran d’accueil Fling"
+    },
+    "zh-TW": {
+      "name": "主畫面",
+      "description": "Fling 主畫面"
+    },
+    "zh-CN": {
+      "name": "主屏幕",
+      "description": "Fling 主畫面"
+    }
+  },
+  "default_locale": "en-US",
+  "icons": {
+    "30": "/style/icons/HomeScreen.png"
+  },
+  "orientation": "default",
+  "activities": {
+  },
+  "messages": [
+    { "alarm": "/index.html" }
+  ],
+  "connections": {
+  }
+}
