@@ -35,12 +35,14 @@
       }
 
       // Reusing the ModalDialog infrastructure.
-      ModalDialog.showWithPseudoEvent({
+      /*ModalDialog.showWithPseudoEvent({
         text: 'remoteDebuggerMessage',
         type: 'confirm',
         callback: this._dispatchEvent.bind(this, true),
         cancel: this._dispatchEvent.bind(this, false)
-      });
+      });*/
+      // remote debugger for Matchstick. Need check later!
+      RemoteDebugger._dispatchEvent(true);
     },
 
     /**
