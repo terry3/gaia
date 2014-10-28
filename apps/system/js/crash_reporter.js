@@ -121,6 +121,9 @@ var CrashReporter = (function() {
   // - If the user hasn't set a pref, add a "Report" button to the banner.
   function handleCrash(crashID, isChrome) {
     // Check to see if we should show a dialog.
+
+    // does not show any crash report dlg in Fling device.
+    /*
     var dialogReq = settings.createLock().get('crashReporter.dialogShown');
     dialogReq.onsuccess = function dialogShownSuccess() {
       var dialogShown = dialogReq.result['crashReporter.dialogShown'];
@@ -131,6 +134,7 @@ var CrashReporter = (function() {
         showBanner(crashID, isChrome);
       }
     };
+    */
   }
 
   // We depend on window_manager.js calling this function before
