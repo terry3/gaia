@@ -70,6 +70,7 @@ var ConnectService = (function () {
     var deviceVersion = '';
     var isToggled = false;
     var isOldTime = false;
+    var requestId = 0;
 
 
     var buffer = '';
@@ -110,52 +111,22 @@ var ConnectService = (function () {
     isOldTime = true;
 
     /**
-     * notify pal about current wifi ssid name
+     * notify flingd/castd about current wifi ssid name
      */
-    function notify_pal_nameChanged() {
-
+    function notifyNameChanged() {
         var message = JSON.stringify({
-            'type': 'HOME_CONFIG_CHANGE',
+            'type': 'SYSTEM_STATUS',
             'name': deviceName,
-            'ssid': connectssid
+            'ssid': connectssid,
+            'requestId': generateRequestID()
         });
-        var selfApp = null;
-        var data = ConstantUtils.encode(message);
-        console.log("send command " + data);
-        if (!selfApp) {
-            navigator.mozApps.getSelf().onsuccess = function gotSelf(evt) {
-                selfApp = evt.target.result;
-                console.log('pal', 'var selfApp is initialized!');
-
-                if (selfApp.connect) {
-                    selfApp.connect('pal-name-change').then(function onConnAccepted(ports) {
-                        console.log('pal:', 'connect to pal-name-change port');
-                        ports.forEach(function (port) {
-                            port.postMessage(data);
-                        });
-                    }, function onConnRejected(reason) {
-                        console.error('pal', 'failed to connect to pal-name-change port for ' + reason);
-                        window.setTimeout(notify_pal_nameChanged(data), 500);
-                    });
-                }
-            };
-        } else {
-            if (selfApp.connect) {
-                selfApp.connect('pal-name-change').then(function onConnAccepted(ports) {
-                    console.log('pal:', 'connect to pal-name-change port');
-                    ports.forEach(function (port) {
-                        port.postMessage(data);
-                    });
-                }, function onConnRejected(reason) {
-                    console.error('pal', 'failed to connect to pal-name-change port for ' + reason);
-                    console.log('pal', 'Try to connect again!');
-                    window.setTimeout(notify_pal_nameChanged(data), 500);
-                });
-            }
-        }
-
+        flingUtils.castdStatusChange(ConstantUtils.encode(message));
+        flingUtils.flingdStatusChange(ConstantUtils.encode(message));
     }
 
+    function generateRequestID() {
+        return ++requestId;
+    }
     /**
      * Find colon pos in buffer.
      *
@@ -453,7 +424,7 @@ var ConnectService = (function () {
             name: name
         };
         updateData(storeObj);
-        notify_pal_nameChanged();
+        notifyNameChanged();
         PageHelper.setElement(name, connectssid);
     }
 
@@ -1351,7 +1322,7 @@ var ConnectService = (function () {
                         cursor.continue();
                         i++;
 
-                        notify_pal_nameChanged();
+                        notifyNameChanged();
                     } else {
                         netcastDB.closeDB();
                         initNetcast();
@@ -1401,7 +1372,6 @@ var ConnectService = (function () {
      * Only called once when js loaded
      */
     function init() {
-        PageHelper.init_cast_socket();
 
         networkManager.onenabled = function () {
 
@@ -1595,6 +1565,7 @@ var ConnectService = (function () {
         initData();
         fontInit();
         ConnectConfigDaemon();
+        flingUtils.init();
     }
 
     init();
@@ -1602,6 +1573,15 @@ var ConnectService = (function () {
     return {
         setDeviceVersion : function(ver) {
             deviceVersion = ver;
+        },
+        getDevicesStatus: function () {
+          var message = JSON.stringify({
+            'type': 'SYSTEM_STATUS',
+            'name': deviceName,
+            'ssid': connectssid,
+            'requestId': generateRequestID()
+          });
+          return ConstantUtils.encode(message);
         }
     };
 })();
