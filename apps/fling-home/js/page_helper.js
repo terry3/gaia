@@ -69,59 +69,16 @@ var PageHelper = {
 
     },
 
-    init_cast_socket: function () {
-        var context = this;
-        console.log('init_cast_socket');
-        cast_socket = navigator.mozTCPSocket.open('127.0.0.1', '8010', {binaryType: 'string'});
-
-        cast_socket.onopen = function (event) {
-            console.log("connected to pal server!");
-            if (send_faile_event != null) {
-                var status;
-                console.log("Handle network status change: " + send_faile_event);
-                status = JSON.stringify({
-                    'type': 'SYSTEM_STATUS',
-                    'network_changed': send_faile_event, //'ap/station'
-                    'requestId': this.generateRequestID()
-                });
-                console.log("Send SYSTEM_STATUS:" + status + " state:" + cast_socket.readyState);
-                cast_socket.send(status.length + ":" + status);
-                send_faile_event = null;
-            }
-        };
-
-        cast_socket.onerror = function (event) {
-            console.error("cast Socket error ");
-        };
-
-        cast_socket.onclose = function (event) {
-            console.log("onclose! re-create cast connection.");
-            event.target.close();
-            window.setTimeout(function () {
-                context.init_cast_socket();
-            }, 5000);
-        };
-
-        cast_socket.ondata = function (event) {
-            console.log("ondata: " + event.data);
-        };
-    },
-
     network_change: function (st) {
-        var status;
+        var message;
         console.log("Handle network status change: " + st);
-        status = JSON.stringify({
+        message = JSON.stringify({
             'type': 'SYSTEM_STATUS',
             'network_changed': st, //'ap/station'
             'requestId': this.generateRequestID()
         });
-
-        if (cast_socket !== null && cast_socket.readyState === "open") {
-            console.log("Send SYSTEM_STATUS:" + status + " state:" + cast_socket.readyState);
-            cast_socket.send(status.length + ":" + status);
-        } else {
-            send_faile_event = st;
-        }
+        flingUtils.castdStatusChange(message);
+        flingUtils.flingdStatusChange(message);
     },
 
     generateRequestID: function () {

@@ -1,159 +1,115 @@
-/**
- * Created by wangxianfeng on 14-7-4.
- */
-
-
+'used dict'
 var CastAppManager = (function () {
-    window.addEventListener('castappclosed', function onkilled(evt) {
-        console.log('pal:', 'get castappclosed event, current:', fsm.current);
-        if (fsm.current == 'stopping') {
-            fsm.stopped();
-        } else if (fsm.current == 'running') {
-            fsm.bash_kill();
-        }
+  var prefix = 'app://';
+
+  var castAppConfig = {
+    'isActivity': false,
+    'url': 'app://castappcontainer.gaiamobile.org/index.html',
+    'name': 'CastAppContainer',
+    'manifestURL': 'app://castappcontainer.gaiamobile.org/manifest.webapp',
+    'origin': 'app://castappcontainer.gaiamobile.org'
+  };
+
+  var localAppConfig = {
+    'url': '',
+    'manifestURL': '',
+    'origin': ''
+  };
+  var appWindowFactory = new AppWindowFactory();
+
+  function doAppCommand(message) {
+    console.log('pal:', 'message = ' + JSON.stringify(message));
+    //{"type":"LAUNCH_RECEIVER","app_id":"~browser",
+    // "app_info":{"url":"http://castapp.infthink.com/receiver/mediaplayer/index.html",
+    // "useIpc":true}}
+
+    var command = message.type;
+    if (command == 'LAUNCH_RECEIVER') {
+      if (message.app_id == '~browser') {
+        console.log('XXXXX appinfo');
+        startCastAppContainer(message.app_info.url);
+      } else if (message.app_id == '~native') {
+        console.log('XXXXX packagename');
+        startLocalApp(message.app_info.package_name);
+      } else if (message.appUrl) {
+        //for node-castd
+        startCastAppContainer(message.appUrl);
+      }
+    } else if (command == 'STOP_RECEIVER') {
+
+      if (message.app_info.package_name) {
+        localAppConfig.url = prefix + message.app_info.package_name + '/index.html';
+        localAppConfig.manifestURL = prefix + message.app_info.package_name + '/manifest.webapp';
+        localAppConfig.origin = prefix + message.app_info.package_name;
+        stopApplication(localAppConfig);
+      }
+      stopApplication(castAppConfig);
+
+    }
+
+
+  }
+
+
+  function stopApplication(config) {
+    console.log('pal:', 'Stop Receiver App!');
+    AppWindowManager.display(null, 'immediate', 'immediate');
+    appWindowFactory.handleEvent({
+      type: 'webapps-close',
+      detail: config
     });
+  }
 
-    window.addEventListener('castappopened', function onopened(evt) {
-        console.log('pal:', 'get castappopened event, current:', fsm.current);
-        if (fsm.current == 'starting') {
-            fsm.started();
-        } else if (fsm.current == 'idle') {
-            fsm.bash_open();
-        }
+  function startLocalApp(pkg) {
+    //com.a.com
+    var prefix = 'app://';
+    localAppConfig.url = prefix + pkg + '/index.html';
+    localAppConfig.manifestURL = prefix + pkg + '/manifest.webapp';
+    localAppConfig.origin = prefix + pkg;
+
+    appWindowFactory.handleEvent({
+      type: 'webapps-launch',
+      detail: localAppConfig
     });
+    console.log('pal:', 'startLocalApp:', pkg);
+  }
 
-    var fsm = StateMachine.create({
-
-        initial: 'idle',
-        events: [
-            { name: 'start', from: 'idle', to: 'starting' },
-            { name: 'started', from: 'starting', to: 'running' },
-            { name: 'stop', from: 'running', to: 'stopping' },
-            { name: 'stopped', from: 'stopping', to: 'idle' },
-            { name: 'bash_kill', from: 'running', to: 'idle' },
-            { name: 'bash_open', from: 'idle', to: 'running' }
-        ],
-
-        callbacks: {
-            onstart: function () {
-            },
-            onstarted: function () {
-                console.log('pal:', 'onstarted');
-                doPending();
-            },
-            onstop: function () {
-            },
-            onstopped: function () {
-                console.log('pal:', 'onstopped');
-                doPending();
-            },
-            error: function (eventName, from, to, args, errorCode, errorMessage) {
-                return 'event ' + eventName + ': ' + errorMessage;
-            },
-            onchangestate: function (event, from, to) {
-                console.log('pal:', "change statue: " + from + " to " + to);
-            }
-        }
-
+  function startCastAppContainer(appUrl) {
+    appWindowFactory.handleEvent({
+      type: 'webapps-launch',
+      detail: castAppConfig
     });
-
-    function doPending() {
-        var length = cmdQueue.length;
-        var lastCmd = '';
-        console.log('pal:', 'cmdQueue length: ' + cmdQueue.length);
-        if (length > 0) {
-            lastCmd = cmdQueue[length - 1];
-            console.log('pal:', 'lastCmd = ' + JSON.stringify(lastCmd));
-            doAppCommand(lastCmd);
-            cmdQueue = [];
-        }
-    }
-
-    var cmdQueue = [];
-
-    function doAppCommand(message) {
-        console.log('pal:', 'message = ' + JSON.stringify(message));
-        console.log('pal:', 'current status: ' + fsm.current);
-        var command = message.type;
-        var appUrl;
-        if (command == 'LAUNCH_RECEIVER') {
-            appUrl = message.appUrl;
-            if (fsm.current == 'idle') {
-                fsm.start();
-                startApplication(appUrl);
-            } else if (fsm.current == 'starting') {
-                cmdQueue.push({'type': command, 'appUrl': appUrl});
-            } else if (fsm.current == 'running') {
-                startApplication(appUrl);
-            } else if (fsm.current === 'stopping') {
-                cmdQueue.push({'type': command, 'appUrl': appUrl});
-            }
-        } else if (command == 'STOP_RECEIVER') {
-            if (fsm.current == 'idle') {
-
-            } else if (fsm.current == 'starting') {
-                cmdQueue.push({'type': command});
-            } else if (fsm.current == 'running') {
-                fsm.stop();
-                stopApplication();
-            } else if (fsm.current === 'stopping') {
-            }
-        }
-    }
-
-    function stopApplication() {
-        var origin = 'app://castappcontainer.gaiamobile.org';
-        console.log("pal:", "Stop Receiver App!");
-        AppWindowManager.display(null, 'immediate', 'immediate');
-        AppWindowManager.kill(origin);
-    }
-
-    function startApplication(appUrl) {
-        console.log("pal:", "start app:", appUrl);
-        startAppContainer('CastAppContainer');
-        setAppUrl(['launch', appUrl], 'pal-app-cmd');
-    }
-
-    /*
-     start app's container application
-     */
-    function startAppContainer(appName) {
-        navigator.mozApps.mgmt.getAll().onsuccess = function (event) {
-            var apps;
-            apps = event.target.result;
-            apps.forEach(function (app) {
-                if (app.manifest.name === appName) {
-                    app.launch();
-                }
-            });
-        };
-    }
-
-    function setAppUrl(data, cmd) {
-        console.log('pal:', "setAppUrl! the data is " + data + " , the command is " + cmd);
-        navigator.mozApps.getSelf().onsuccess = function (event) {
-            var _selfApp;
-            _selfApp = event.target.result;
-            console.log("pal:", "ready to connect app");
-            if (_selfApp.connect !== null) {
-                (_selfApp.connect(cmd)).then(function (ports) {
-                    ports.forEach(function (port) {
-                        port.postMessage(data);
-                    });
-                }, function (reason) {
-                    console.log("pal:", "failed to connect to " + cmd + " " + reason);
-                    console.log("pal:", "try to reconnect...");
-                    window.setTimeout(function () {
-                        setAppUrl(data, cmd);
-                    }, 500);
-                });
-            }
-        };
-    }
+    console.log('pal:', 'startCastAppContainer:', appUrl);
+    setAppUrl(['launch', appUrl], 'pal-app-cmd');
+  }
 
 
-    return {
-        doAppCommand: doAppCommand
-    }
+  function setAppUrl(data, cmd) {
+    console.log('pal:', 'setAppUrl! the data is ' + data + ' , the command is ' + cmd);
+    navigator.mozApps.getSelf().onsuccess = function (event) {
+      var _selfApp;
+      _selfApp = event.target.result;
+      console.log('pal:', 'ready to connect app');
+      if (_selfApp.connect !== null) {
+        (_selfApp.connect(cmd)).then(function (ports) {
+          ports.forEach(function (port) {
+            port.postMessage(data);
+          });
+        }, function (reason) {
+          console.log('pal:', 'failed to connect to ' + cmd + ' ' + reason);
+          console.log('pal:', 'try to reconnect...');
+          window.setTimeout(function () {
+            setAppUrl(data, cmd);
+          }, 500);
+        });
+      }
+    };
+  }
 
-})();
+
+  return {
+    doAppCommand: doAppCommand
+  }
+
+})
+();
