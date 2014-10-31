@@ -43,7 +43,7 @@ var CastAppManager = (function () {
         startCastAppContainer(message.appUrl);
       }
     } else if (command == 'STOP_RECEIVER') {
-      if (message.app_id == '~browser' || message.appUrl) {
+      if (message.app_id == '~browser') {
         stopApplication(castAppConfig);
       } else if (message.app_id == '~native') {
         if (message.app_info && message.app_info.url) {
@@ -60,6 +60,9 @@ var CastAppManager = (function () {
             console.error('can not stop native application: ' + nativeStr);
           }
         }
+      }
+      else {
+        stopApplication(castAppConfig);
       }
     } else {
       console.error('not support command: ' + command);
