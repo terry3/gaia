@@ -9,7 +9,7 @@
   var flingSocket = null;
   var HOST = '127.0.0.1';
   var CASTDPORT = 8010;
-  var FLINGDPORT = '9440';
+  var FLINGDPORT = 9440;
   var opt = {binaryType: 'string'};
   var buffer = '';
   var flingBuffer = '';
