@@ -370,9 +370,6 @@
         case 'appcreated':
           var app = evt.detail;
           this._apps[evt.detail.instanceID] = app;
-          if (evt.detail.origin === 'app://castappcontainer.gaiamobile.org'){
-              this.publish('castappopened', {'origin':evt.detail.origin});
-          }
           break;
 
         case 'appterminated':
@@ -382,9 +379,6 @@
             activeApp = null;
           }
           delete this._apps[instanceID];
-          if (evt.detail.origin === 'app://castappcontainer.gaiamobile.org'){
-              this.publish('castappclosed', {'origin':evt.detail.origin});
-          }
           break;
 
         case 'reset-orientation':

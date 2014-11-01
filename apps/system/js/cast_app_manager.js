@@ -2,6 +2,8 @@
 
 var CastAppManager = (function () {
 
+  var receiverAppUrl = 'about:blank';
+
   var castAppConfig = {
     'isActivity': false,
     'url': 'app://castappcontainer.gaiamobile.org/index.html',
@@ -35,7 +37,7 @@ var CastAppManager = (function () {
         }
         var appStr = message.app_info.url;
         if (appStr.index('app:?') == 0) {
-          startLocalApp(appStr.slice(5));
+          startNativeApp(appStr.slice(5));
         } else {
           console.error('can not start native application: ' + appStr);
         }
@@ -70,7 +72,7 @@ var CastAppManager = (function () {
   }
 
   function stopApplication(config) {
-    console.log('pal:', 'Stop Receiver App!');
+    console.log('pal:', 'Stop app:', config.origin);
     AppWindowManager.display(null, 'immediate', 'immediate');
     AppWindowManager.kill(config.origin);
     //TODO
@@ -80,8 +82,8 @@ var CastAppManager = (function () {
 //    });
   }
 
-  function startLocalApp(pkg) {
-    console.log('package name = ' + pkg);
+  function startNativeApp(pkg) {
+    console.log('pal:', 'Start native app, package name = ' + pkg);
     var prefix = 'app://';
     localAppConfig.url = prefix + pkg + '/index.html';
     localAppConfig.manifestURL = prefix + pkg + '/manifest.webapp';
@@ -90,10 +92,11 @@ var CastAppManager = (function () {
       type: 'webapps-launch',
       detail: localAppConfig
     });
-    console.log('pal:', 'startLocalApp:', pkg);
   }
 
   function startCastAppContainer(appUrl) {
+    console.log('pal:', 'Start receiver app, url = ' + appUrl);
+    receiverAppUrl = appUrl;
     navigator.mozApps.mgmt.getAll().onsuccess = function (event) {
       var apps;
       apps = event.target.result;
@@ -103,31 +106,22 @@ var CastAppManager = (function () {
         }
       });
     };
-    console.log('pal:', 'startCastAppContainer:', appUrl);
-    setAppUrl(['launch', appUrl], 'pal-app-cmd');
   }
 
-  function setAppUrl(data, cmd) {
-    console.log('pal:', 'setAppUrl! the data is ' + data + ' , the command is ' + cmd);
-    navigator.mozApps.getSelf().onsuccess = function (event) {
-      var _selfApp;
-      _selfApp = event.target.result;
-      console.log('pal:', 'ready to connect app');
-      if (_selfApp.connect !== null) {
-        (_selfApp.connect(cmd)).then(function (ports) {
-          ports.forEach(function (port) {
-            port.postMessage(data);
-          });
-        }, function (reason) {
-          console.log('pal:', 'failed to connect to ' + cmd + ' ' + reason);
-          console.log('pal:', 'try to reconnect...');
-          window.setTimeout(function () {
-            setAppUrl(data, cmd);
-          }, 500);
-        });
+  window.addEventListener('iac-receiver-app-request', function (evt) {
+      console.log('pal:', 'Handle the request from receiver app container!');
+      try {
+          var port = IACHandler.getPort('receiver-app-request');
+      } catch (error) {
+          console.log(error.toString());
       }
-    };
-  }
+      var req = evt.detail;
+      if (req == 'req-url') {
+          console.log('pal:', 'Response receiver app url:', receiverAppUrl);
+          port.postMessage(['url', receiverAppUrl]);
+          receiverAppUrl = 'about:blank';
+      }
+  });
 
   return {
     doAppCommand: doAppCommand

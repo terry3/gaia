@@ -27,23 +27,38 @@
         }
     };
 
-    function handlePALCommand(evt) {
-        console.log('pal:', 'handle pal command: ' + evt.detail);
-        try {
-            var port = IACHandler.getPort('pal-app-cmd');
-        } catch (error) {
-            console.log(error.toString());
-        }
-        var command = evt.detail[0];
-
-        if (command === 'launch') {
-            var url = evt.detail[1];
-            console.log('pal:', 'launch url: ' + url);
-            launchCastApp(url);
-        } else if (command === 'stop') {
-            console.log('pal:', 'stop app');
-            window.close();
-        }
+    function requestURL() {
+        console.log('pal:', 'Start to request the receiver app url!');
+        navigator.mozApps.getSelf().onsuccess = function (event) {
+            var _selfApp;
+            _selfApp = event.target.result;
+            if (_selfApp.connect) {
+                _selfApp.connect('receiver-app-request').then(function (ports) {
+                    ports.forEach(function (port) {
+                        port.onmessage = function(event) {
+                            if (event.data) {
+                                var url = event.data[1];
+                                console.log('pal:', 'Start to launch receiver app:', url);
+                                launchCastApp(url);
+                            }
+                        };
+                        port.postMessage('req-url');
+                    });
+                }, function (reason) {
+                    console.log('pal:', 'failed to connect to receiver-app-request', reason);
+                    console.log('pal:', 'try to reconnect...');
+                    window.setTimeout(function () {
+                        requestURL();
+                    }, 500);
+                });
+            } else {
+                console.log('pal:', '_selfApp.connect is null!');
+                console.log('pal:', 'try to reconnect...');
+                window.setTimeout(function () {
+                    requestURL();
+                }, 500);
+            }
+        };
     }
 
     function launchCastApp(url) {
@@ -87,7 +102,6 @@
     }
 
     function init() {
-        window.addEventListener('iac-pal-app-cmd', handlePALCommand);
         appContainerFrame = document.getElementById('app_container');
 
         var iframeEvents = ['loadstart', 'loadend', 'locationchange',
@@ -98,10 +112,11 @@
         iframeEvents.forEach(function attachEvent(type) {
             appContainerFrame.addEventListener('mozbrowser' + type, handleAppContainerEvent);
         });
+        requestURL();
     }
 
     function handleAppContainerEvent(evt) {
-        console.log('pal:', 'app container iframe event: ' + evt.type);
+        console.log('pal:', 'Receive iframe event: ' + evt.type);
         switch (evt.type) {
             case 'mozbrowserclose':
                 window.close();
