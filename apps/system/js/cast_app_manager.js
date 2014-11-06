@@ -22,48 +22,29 @@ var CastAppManager = (function () {
   function doAppCommand(message) {
     console.log('pal:', 'message = ' + JSON.stringify(message));
     var command = message.type;
+    var appStr = message.app_info.url;
+
     if (command == 'LAUNCH_RECEIVER') {
-      if (message.app_id == '~browser') {
-        if (!message.app_info) {
-          return;
-        }
-        var httpStr = message.app_info.url;
-        if (httpStr.indexOf('http') == 0) {
-          startCastAppContainer(httpStr);
-        }
-      } else if (message.app_id == '~native') {
-        if (!message.app_info) {
-          return;
-        }
-        var appStr = message.app_info.url;
-        if (appStr.index('app:?') == 0) {
-          startNativeApp(appStr.slice(5));
-        } else {
-          console.error('can not start native application: ' + appStr);
-        }
-      } else if (message.appUrl) {
+      if (appStr && (appStr).indexOf('http') == 0) {
+        startCastAppContainer(appStr);
+      } else if (appStr && appStr.index('app:?') == 0) {
+        startNativeApp(appStr.slice(5));
+      }  else if (message.appUrl) {
         startCastAppContainer(message.appUrl);
       }
     } else if (command == 'STOP_RECEIVER') {
-      if (message.app_id == '~browser') {
+      if (appStr && (appStr).indexOf('http') == 0) {
         stopApplication(castAppConfig);
-      } else if (message.app_id == '~native') {
-        if (message.app_info && message.app_info.url) {
-          var nativeStr = message.app_info.url;
-          if (nativeStr.index('app:?') == 0) {
-            var appPkg = nativeStr.slice(5);
-            var prefix = 'app://';
-            console.log('native app package name: ' + appPkg);
-            localAppConfig.url = prefix + appPkg + '/index.html';
-            localAppConfig.manifestURL = prefix + appPkg + '/manifest.webapp';
-            localAppConfig.origin = prefix + appPkg;
-            stopApplication(localAppConfig);
-          } else {
-            console.error('can not stop native application: ' + nativeStr);
-          }
-        }
-      }
-      else {
+      } else if (appStr && appStr.index('app:?') == 0) {
+        var nativeStr = message.app_info.url;
+        var appPkg = nativeStr.slice(5);
+        var prefix = 'app://';
+        console.log('native app package name: ' + appPkg);
+        localAppConfig.url = prefix + appPkg + '/index.html';
+        localAppConfig.manifestURL = prefix + appPkg + '/manifest.webapp';
+        localAppConfig.origin = prefix + appPkg;
+        stopApplication(localAppConfig);
+      } else {
         stopApplication(castAppConfig);
       }
     } else {
@@ -109,18 +90,18 @@ var CastAppManager = (function () {
   }
 
   window.addEventListener('iac-receiver-app-request', function (evt) {
-      console.log('pal:', 'Handle the request from receiver app container!');
-      try {
-          var port = IACHandler.getPort('receiver-app-request');
-      } catch (error) {
-          console.log(error.toString());
-      }
-      var req = evt.detail;
-      if (req == 'req-url') {
-          console.log('pal:', 'Response receiver app url:', receiverAppUrl);
-          port.postMessage(['url', receiverAppUrl]);
-          receiverAppUrl = 'about:blank';
-      }
+    console.log('pal:', 'Handle the request from receiver app container!');
+    try {
+      var port = IACHandler.getPort('receiver-app-request');
+    } catch (error) {
+      console.log(error.toString());
+    }
+    var req = evt.detail;
+    if (req == 'req-url') {
+      console.log('pal:', 'Response receiver app url:', receiverAppUrl);
+      port.postMessage(['url', receiverAppUrl]);
+      receiverAppUrl = 'about:blank';
+    }
   });
 
   return {
