@@ -128,9 +128,11 @@ var networkHelper = {
             }
 
             if (password == null || password == '') {
-                console.log('password is null');
-                networkHelper.openHotspot('!fail');
-                return;
+                if (type != 'OPEN') {
+                    console.log('password is null');
+                    networkHelper.openHotspot('!fail');
+                    return;
+                }
             }
 
             scaning = true;
