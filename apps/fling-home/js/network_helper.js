@@ -106,12 +106,17 @@ var networkHelper = {
         function hiddenNetwork() {
             var network = {};
             network.hidden = true;
+            network.security = [type];
             network.ssid = ssid;
-            if (network.security === undefined) {
-                network.capabilities = [type];
-            } else {
-                network.security = [type];
+            if (window.MozWifiNetwork !== undefined) {
+                network = new window.MozWifiNetwork(network);
             }
+            // if (network.security === undefined) {
+            //     network.capabilities = [type];
+            // } else {
+            //     network.security = [type];
+            // }
+
             connect(network);
         }
 
