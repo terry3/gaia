@@ -18,6 +18,7 @@ var refreshTimer = null;
 var cast_socket = null;
 var requestId = 0;
 var send_faile_event = null;
+var ip;
 var PageHelper = {
     PAGE_STATUS : {
         setup_page:1,
@@ -256,6 +257,12 @@ var PageHelper = {
                 'relSignalStrength  =', event.relSignalStrength, 'linkSpeed =', event.linkSpeed,
                 'ipAddress =', event.ipAddress, 'network =', event.network);
             update(event.relSignalStrength);
+            updateIp(event.ipAddress);
+        };
+        function updateIp(ip) {
+            console.log('updateIp: ' +ip);
+            var readyWifiIp = document.getElementById('ready_wifi_ip');
+            readyWifiIp.innerHTML = ip;
         };
 
         function update(relSignalStrength) {
