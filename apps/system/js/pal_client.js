@@ -1,21 +1,17 @@
 /*
- This is a tool connected with castd and will be used by castd/home to launch/stop cast receivers
+ This is a tool connected with flingd and to launch/stop receivers app.
  */
 'use strict';
 
 (function () {
 
-  var castSocket = null;
   var flingSocket = null;
   var HOST = '127.0.0.1';
-  var CASTDPORT = 8010;
   var FLINGDPORT = 9440;
   var opt = {binaryType: 'string'};
-  var buffer = '';
   var flingBuffer = '';
   var messageSize = -1;
   var pendingRequest = new AsyncSemaphore();
-  var cachedVolume = -1;
   var currentVolume = 15;
   var activeTimeout = 0;
 
@@ -57,61 +53,10 @@
           if (flingBuffer.length >= messageSize) {
             var msgBuffer = flingBuffer.slice(0, messageSize);
             doCommand(JSON.parse(msgBuffer.toString()));
-            if (buffer.length > messageSize) {
+            if (flingBuffer.length > messageSize) {
               flingBuffer = flingBuffer.slice(messageSize);
             } else {
               flingBuffer = '';
-            }
-            messageSize = -1;
-          } else {
-            break;
-          }
-        }
-      }
-    };
-  }
-
-  function createCastConnection() {
-    castSocket = navigator.mozTCPSocket.open(HOST, CASTDPORT, opt);
-
-    castSocket.onopen = function (event) {
-      initSystemVolume(castSocket);
-    };
-
-    castSocket.onerror = function (event) {
-      console.error('pal:', "palSocket error: " + event.data.name);
-    };
-
-    castSocket.onclose = function (event) {
-      console.log("pal:", "onclose!");
-      event.target.close();
-      window.setTimeout(function () {
-        createCastConnection();
-      }, 5000);
-    };
-
-    castSocket.ondata = function (event) {
-      console.log('cast:', "ondata: " + event.data);
-      buffer = buffer.concat(event.data);
-      while (true) {
-        if (messageSize < 0) {
-          var colonIndex = findColon(buffer);
-          if (colonIndex > 0) {
-            messageSize = parseInt(buffer.slice(0, colonIndex).toString());
-            buffer = buffer.slice(colonIndex + 1);
-          } else {
-            break;
-          }
-        }
-
-        if (messageSize > 0) {
-          if (buffer.length >= messageSize) {
-            var msgBuffer = buffer.slice(0, messageSize);
-            doCommand(JSON.parse(msgBuffer.toString()));
-            if (buffer.length > messageSize) {
-              buffer = buffer.slice(messageSize);
-            } else {
-              buffer = '';
             }
             messageSize = -1;
           } else {
@@ -198,7 +143,7 @@
         'volumeMuted': muted,
         'requestId': requestId
       });
-      castSocket.send("" + volumeMessage.length + ":" + volumeMessage);
+      flingSocket.send("" + volumeMessage.length + ":" + volumeMessage);
       console.log('set Volume success, send: ' + volumeMessage.length + ":" + volumeMessage);
       pendingRequest.p();
     };
@@ -246,5 +191,4 @@
   }
 
   createFlingConnection();
-  createCastConnection();
 })();

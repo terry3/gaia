@@ -16,28 +16,7 @@
 
 'use strict';
 var flingUtils = (function () {
-  var castSocket = null;
   var flingSocket = null;
-
-  var initCastdSocket = function () {
-    castSocket = navigator.mozTCPSocket.open('127.0.0.1', '8010', {binaryType: 'string'});
-
-    castSocket.onopen = function (event) {
-      console.log("connected to castd server!");
-      castdStatusChange(ConnectService.getDevicesStatus());
-    };
-
-    castSocket.onerror = function (event) {
-      console.error("cast Socket error ");
-    };
-
-    castSocket.onclose = function (event) {
-      event.target.close();
-      window.setTimeout(function () {
-        initCastdSocket();
-      }, 5000);
-    };
-  };
 
   var initFlingdSocket = function () {
     flingSocket = navigator.mozTCPSocket.open('127.0.0.1', '9440', {binaryType: 'string'});
@@ -65,20 +44,12 @@ var flingUtils = (function () {
     }
   };
 
-  var castdStatusChange = function (message) {
-    if (castSocket !== null && castSocket.readyState === "open") {
-      castSocket.send(message.length + ":" + message);
-    }
-  };
-
   function init() {
-    initCastdSocket();
     initFlingdSocket();
   }
 
   return {
     init: init,
-    castdStatusChange: castdStatusChange,
     flingdStatusChange: flingdStatusChange
   }
 })();

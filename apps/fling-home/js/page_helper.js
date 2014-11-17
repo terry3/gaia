@@ -78,7 +78,6 @@ var PageHelper = {
             'network_changed': st, //'ap/station'
             'requestId': this.generateRequestID()
         });
-        flingUtils.castdStatusChange(message);
         flingUtils.flingdStatusChange(message);
     },
 
