@@ -120,7 +120,6 @@ var ConnectService = (function () {
             'ssid': connectssid,
             'requestId': generateRequestID()
         });
-        flingUtils.castdStatusChange(ConstantUtils.encode(message));
         flingUtils.flingdStatusChange(ConstantUtils.encode(message));
     }
 
