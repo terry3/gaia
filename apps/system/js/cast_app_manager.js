@@ -2,8 +2,6 @@
 
 var CastAppManager = (function () {
 
-  var receiverAppUrl = 'about:blank';
-
   var castAppConfig = {
     'isActivity': false,
     'url': 'app://castappcontainer.gaiamobile.org/index.html',
@@ -77,32 +75,14 @@ var CastAppManager = (function () {
 
   function startCastAppContainer(appUrl) {
     console.log('pal:', 'Start receiver app, url = ' + appUrl);
-    receiverAppUrl = appUrl;
-    navigator.mozApps.mgmt.getAll().onsuccess = function (event) {
-      var apps;
-      apps = event.target.result;
-      apps.forEach(function (app) {
-        if (app.manifest.name === 'CastAppContainer') {
-          app.launch();
-        }
-      });
-    };
+    var app = new MozActivity({
+      name: 'launch-receiver',
+      data: {
+        type: 'url',
+        url: appUrl
+      }
+    });
   }
-
-  window.addEventListener('iac-receiver-app-request', function (evt) {
-    console.log('pal:', 'Handle the request from receiver app container!');
-    try {
-      var port = IACHandler.getPort('receiver-app-request');
-    } catch (error) {
-      console.log(error.toString());
-    }
-    var req = evt.detail;
-    if (req == 'req-url') {
-      console.log('pal:', 'Response receiver app url:', receiverAppUrl);
-      port.postMessage(['url', receiverAppUrl]);
-      receiverAppUrl = 'about:blank';
-    }
-  });
 
   return {
     doAppCommand: doAppCommand

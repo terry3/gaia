@@ -105,10 +105,6 @@
           "description": "Communicate homescreen for reboot",
           "rules": {}
     },
-    "receiver-app-request": {
-      "description": "Handle request from receiver app container",
-      "rules": {}
-    },
     "bluetoothTransfercomms": {
       "description": "Communication with bluetooth apps for sending files info",
       "rules": {}
