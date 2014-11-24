@@ -27,40 +27,6 @@
         }
     };
 
-    function requestURL() {
-        console.log('pal:', 'Start to request the receiver app url!');
-        navigator.mozApps.getSelf().onsuccess = function (event) {
-            var _selfApp;
-            _selfApp = event.target.result;
-            if (_selfApp.connect) {
-                _selfApp.connect('receiver-app-request').then(function (ports) {
-                    ports.forEach(function (port) {
-                        port.onmessage = function(event) {
-                            if (event.data) {
-                                var url = event.data[1];
-                                console.log('pal:', 'Start to launch receiver app:', url);
-                                launchCastApp(url);
-                            }
-                        };
-                        port.postMessage('req-url');
-                    });
-                }, function (reason) {
-                    console.log('pal:', 'failed to connect to receiver-app-request', reason);
-                    console.log('pal:', 'try to reconnect...');
-                    window.setTimeout(function () {
-                        requestURL();
-                    }, 500);
-                });
-            } else {
-                console.log('pal:', '_selfApp.connect is null!');
-                console.log('pal:', 'try to reconnect...');
-                window.setTimeout(function () {
-                    requestURL();
-                }, 500);
-            }
-        };
-    }
-
     function launchCastApp(url) {
         //appContainerFrame.purgeHistory();
         appContainerFrame.src = url;
@@ -76,7 +42,7 @@
                 alertBox.hide();
             }
 
-            if(loadtimer != null){
+            if (loadtimer != null) {
                 clearInterval(loadtimer);
                 loadtimer = null;
                 alertBox.hide();
@@ -112,7 +78,6 @@
         iframeEvents.forEach(function attachEvent(type) {
             appContainerFrame.addEventListener('mozbrowser' + type, handleAppContainerEvent);
         });
-        requestURL();
     }
 
     function handleAppContainerEvent(evt) {
@@ -135,4 +100,10 @@
     }
 
     init();
+    navigator.mozSetMessageHandler("activity", function (activityRequest) {
+        var option = activityRequest.source;
+        console.log(option.data.url);
+        launchCastApp(option.data.url);
+    });
+
 })();

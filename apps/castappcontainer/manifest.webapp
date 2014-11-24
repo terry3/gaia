@@ -13,6 +13,18 @@
     "name": "Shawn"
   }, 
   "type": "certified", 
+  "activities": {
+    "launch-receiver": {
+      "filters": {
+        "type": "url",
+        "url": {
+          "required": true,
+          "regexp":"/^https?:/"
+        },
+        "disposition": "window"
+      }
+    }
+  },
   "permissions": {
     "geolocation": {}, 
     "device-storage:sdcard": {
