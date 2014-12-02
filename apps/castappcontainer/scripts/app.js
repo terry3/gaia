@@ -7,9 +7,8 @@
 // The app entry: just after document load finished.
     var appContainerFrame = null;
     var load_timeout = true;
-    var closetimer = null;
     var loadtimer = null;
-    var load_count = 0;
+    var error_wait = '';
 
     var alertBox = {
         "init": function () {
@@ -28,48 +27,34 @@
     };
 
     function launchCastApp(url) {
-        //appContainerFrame.purgeHistory();
+        console.log("launchCastApp: url: " + url);
         appContainerFrame.src = url;
-        var error_info = navigator.mozL10n.get('network-error');
-        var error_wait = navigator.mozL10n.get('network-wait');
 
         $("#app_container").on("load", function () {
-            console.log('frame load');
             load_timeout = false;
-            if (closetimer != null) {
-                clearTimeout(closetimer);
-                closetimer = null;
-                alertBox.hide();
-            }
-
             if (loadtimer != null) {
-                clearInterval(loadtimer);
+                clearTimeout(loadtimer);
                 loadtimer = null;
                 alertBox.hide();
             }
         });
 
-        loadtimer = window.setInterval(function () {
-            console.log('load count = ' + load_count);
-            load_count++;
-            if (load_timeout && load_count == 1) {
-                console.log('Load timeout count = 1');
+        loadtimer = window.setTimeout(function () {
+            if (load_timeout) {
                 alertBox.show(error_wait);
-            } else if (load_timeout && load_count == 2) {
-                console.log('Load timeout count = 2');
-                clearInterval(loadtimer);
-                loadtimer = null;
-                alertBox.show(error_info);
-                close_self(5000);
             } else {
                 console.log('load success');
             }
-        }, 30 * 1000);
+        }, 15 * 1000);
     }
 
     function init() {
         appContainerFrame = document.getElementById('app_container');
 
+        var mozL10n = navigator.mozL10n;
+        mozL10n.ready(function () {
+          error_wait = navigator.mozL10n.get('network-wait');
+        });
         var iframeEvents = ['loadstart', 'loadend', 'locationchange',
             'titlechange', 'iconchange', 'contextmenu',
             'securitychange', 'openwindow', 'close',
@@ -81,7 +66,7 @@
     }
 
     function handleAppContainerEvent(evt) {
-        console.log('pal:', 'Receive iframe event: ' + evt.type);
+        console.log('pal:', 'Receive iframe event: ' + evt.type + ' ' + evt.detail);
         switch (evt.type) {
             case 'mozbrowserclose':
                 window.close();
@@ -91,19 +76,11 @@
         }
     }
 
-    function close_self(delay) {
-
-        closetimer = setTimeout(function () {
-            console.log('load timeout close self');
-            window.close();
-        }, delay);
-    }
-
-    init();
-    navigator.mozSetMessageHandler("activity", function (activityRequest) {
+    window.onload  = function () {
+      init();
+      navigator.mozSetMessageHandler("activity", function (activityRequest) {
         var option = activityRequest.source;
-        console.log(option.data.url);
         launchCastApp(option.data.url);
-    });
-
+      });
+    }
 })();
