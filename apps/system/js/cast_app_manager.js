@@ -75,13 +75,15 @@ var CastAppManager = (function () {
 
   function startCastAppContainer(appUrl) {
     console.log('pal:', 'Start receiver app, url = ' + appUrl);
-    var app = new MozActivity({
-      name: 'launch-receiver',
-      data: {
-        type: 'url',
-        url: appUrl
-      }
-    });
+    window.setTimeout(function () {
+      var app = new MozActivity({
+        name: 'launch-receiver',
+        data: {
+          type: 'url',
+          url: appUrl
+        }
+      });
+    }, 200);
   }
 
   return {
