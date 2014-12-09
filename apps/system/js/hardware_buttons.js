@@ -106,6 +106,10 @@
    */
   HardwareButtons.prototype.REPEAT_INTERVAL = 100;
 
+  // for reset Matchstick
+  HardwareButtons.prototype.PHONE_RESET_DELAY = 5000;
+  HardwareButtons.prototype.RESET_ON_DELAY = 200;
+
   /**
    * Start listening to events from Gecko and FSM.
    * @memberof HardwareButtons.prototype
@@ -424,7 +428,27 @@
       this.hardwareButtons = hb;
       this.timer = undefined;
       this.repeating = false;
+
+      //presses volume up 10s fire phonereset events(use for Matchstick).
+      this.reset_timer = null;
+      this.reseton_timer = null;
+      this.reseting = false;
     };
+
+  HardwareButtonsVolumeState.prototype.reseton = function() {
+      console.log("reset on");
+      this.reseting = true;
+      if (this.direction === 'volume-up-button-press') {
+          this.hardwareButtons.publish('reseton');
+      }
+  };
+
+  HardwareButtonsVolumeState.prototype.reset = function() {
+      console.log("reset");
+      if (this.direction === 'volume-up-button-press') {
+          this.hardwareButtons.publish('phonereset');
+      }
+  };
 
   /**
    * Trigger repeat actions for volume buttons.
@@ -459,6 +483,11 @@
     this.repeating = false;
     this.timer =
       setTimeout(this.repeat.bind(this), this.hardwareButtons.REPEAT_DELAY);
+
+    // for Matchstick
+    this.reseting = false;
+    this.reset_timer = setTimeout(this.reset.bind(this), this.hardwareButtons.PHONE_RESET_DELAY);
+    this.reseton_timer = setTimeout(this.reseton.bind(this), this.hardwareButtons.RESET_ON_DELAY);
   };
 
   /**
@@ -469,6 +498,16 @@
     if (this.timer) {
       clearTimeout(this.timer);
       this.timer = undefined;
+    }
+
+    // for Matchstick
+    if (this.reset_timer) {
+      clearTimeout(this.reset_timer);
+      this.reset_timer = null;
+    }
+    if (this.reseton_timer) {
+      clearTimeout(this.reseton_timer);
+      this.reseton_timer = null;
     }
   };
 
@@ -500,6 +539,12 @@
           if (!this.repeating) {
             this.hardwareButtons.publish('volumeup');
           }
+
+          // for Matchstick
+          if (this.reseting) {
+            this.hardwareButtons.publish('resetoff');
+          }
+
           this.hardwareButtons.setState('base', type);
           return;
         }

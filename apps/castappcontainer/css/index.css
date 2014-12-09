@@ -1,0 +1,98 @@
+html{
+    height: 100%;
+    background-color: #000;
+}
+body {
+    color: #FFF;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow:hidden;
+}
+
+.browser-page {
+    height: 100%;
+    overflow:hidden;
+    padding: 0;
+    margin: 0;
+}
+.browser-page iframe{
+    border:0;
+    height:100%;
+    width:100%;
+    padding: 0;
+    margin: 0;
+    background-color: #000;
+}
+
+.error_info {
+    width: 100%;
+    height: 100%;
+}
+
+/**
+* alert box css
+**/
+.hide {
+    visibility: hidden;
+}
+
+.alert {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 666px;
+    height: 222px;
+    margin-left: -333px;
+    margin-top: -111px;
+    color: #FFF;
+    font-size: 25px;
+}
+
+.alert .alert-inner {
+    position: relative;
+    width: 666px;
+    height: 222px;
+}
+
+.alert .alert-inner .alert-backend {
+    background: #c16a10;
+    opacity: .8;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 998;
+    width: 100%;
+    width: 666px;
+    height: 222px;
+}
+
+.alert .alert-inner .alert-msg {
+    clear: both;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 999;
+    padding: 50px;
+}
+
+.alert .alert-inner .alert-msg .icon {
+    float: left;
+    background-image: url("../app-icons/alert.png");
+    width: 122px;
+    height: 122px;
+    margin-right: 50px;
+}
+
+.alert .alert-inner .alert-msg .text {
+    float: left;
+    height: 122px;
+    line-height: 160%;
+    width: 394px;
+}
+
+.alert .alert-inner .alert-msg .text .text-inner {
+    display: table-cell;
+    vertical-align: middle;
+    height: 122px;
+}

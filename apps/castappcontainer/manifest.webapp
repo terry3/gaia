@@ -1,0 +1,63 @@
+{
+  "fullscreen": "true", 
+  "name": "CastAppContainer", 
+  "default_locale": "en", 
+  "icons": {
+    "16": "/app-icons/icon.png"
+  }, 
+  "orientation": "landscape", 
+  "version": "0.1", 
+  "launch_path": "/index.html", 
+  "developer": {
+    "url": "http://www.infthink.com", 
+    "name": "Shawn"
+  }, 
+  "type": "certified", 
+  "activities": {
+    "launch-receiver": {
+      "filters": {
+        "type": "url",
+        "url": {
+          "required": true,
+          "regexp":"/^https?:/"
+        },
+        "disposition": "window"
+      }
+    }
+  },
+  "permissions": {
+    "geolocation": {}, 
+    "device-storage:sdcard": {
+      "access": "readwrite"
+    }, 
+    "open-remote-window": {}, 
+    "power": {}, 
+    "audio-capture": {}, 
+    "contacts": {
+      "access": "readonly"
+    }, 
+    "device-storage:videos": {
+      "access": "readwrite"
+    }, 
+    "settings": {
+      "access": "readonly"
+    }, 
+    "storage": {}, 
+    "device-storage:pictures": {
+      "access": "readwrite"
+    }, 
+    "device-storage:music": {
+      "access": "readwrite"
+    }, 
+    "systemXHR": {}, 
+    "video-capture": {}, 
+    "alarms": {}, 
+    "desktop-notification": {}, 
+    "mobileconnection": {}, 
+    "browser": {}, 
+    "webapps-manage": {}, 
+    "wifi-manage": {}, 
+    "tcp-socket": {}
+  },
+  "description": "Cast App Container"
+}

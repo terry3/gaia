@@ -91,6 +91,7 @@
       window.addEventListener('screenchange', this, true);
       window.addEventListener('home', this);
       window.addEventListener('batteryshutdown', this);
+      window.addEventListener('iac-rebootcomms', this); // add for Matchstick
 
       window.addEventListener('attentionopened', this);
       this.elements.cancel.addEventListener('click', this);
@@ -263,6 +264,11 @@
           if (this.visible) {
             this.hide();
           }
+          break;
+
+        case 'iac-rebootcomms': // add for Matchstick
+          console.log("rebootcomms");
+          this._actualPowerOff(true);
           break;
 
         default:

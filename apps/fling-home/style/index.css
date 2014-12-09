@@ -1,0 +1,196 @@
+/**
+ * Created by Liuxg@thundersoft.com.
+ */
+body {
+	font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background:#000 url(images/bg_default.png) no-repeat;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    color: #bababa;
+    font-size: 20px;  
+    }
+
+p{ 
+    margin: 5px 0 15px;
+    }
+
+.text-primary {
+    color: #c16a10;
+    }
+
+.tooltip {
+    position: relative;
+    display: block;
+    font-size: 14px;
+    line-height: 1.4;
+    visibility: visible;
+}
+
+.tooltip.bottom {
+    padding: 5px 0;
+    margin-top: 3px;
+}
+
+.tooltip-inner {
+    max-width: 400px;
+    padding: 10px;
+    color: #fff;
+    text-decoration: none;
+    background-color: #c16a10;
+    border-radius: 4px;
+}
+.tooltip-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+}
+
+
+.tooltip.bottom .tooltip-arrow {
+    top: -3px;
+    left: 20px;
+    border-width: 0 8px 8px;
+    border-bottom-color: #c16a10;
+}
+
+
+.wrapper {
+    margin: 5% 10% 0;
+    }
+
+.page_title {
+    color: #fff;
+    font-size: 36px;
+    font-weight: normal;
+    margin-bottom: 20px;
+    }
+
+.illustrate {
+    margin-top: 50px;
+    position: relative;
+    }
+    .illustrate img{
+        margin-right: 50px;
+        }
+
+.key_code {
+    position: absolute;
+    right: 10%;
+    bottom: 120px;
+    color: #c16a10;
+    font-size: 60px;
+    display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+footer {
+    position:fixed;
+    bottom: 0;
+    left: 0;
+    width: 80%;
+    padding-left: 10%;
+    padding-right: 10%;
+    height: 100px;
+    background:#000 url(images/line.png) no-repeat center top; 
+    background-size: contain; 
+    }
+    dl{
+        float: left;
+        width: 60%;
+        }
+        dt {
+            height: 95px;
+            float: left;
+            margin-right: 20px;
+            }
+        dd{ 
+            margin-bottom: 5px; 
+            text-overflow:ellipsis; 
+            overflow: hidden;
+            font-size: 16px;
+            }
+            dd.device_name {
+                color: #fff;
+                margin-bottom: 10px;
+                }
+
+    .ms_logo{
+        float: right; 
+        margin-top: 30px;
+        }           
+
+
+
+.ready {
+    margin-top: 20%;
+    text-align: center;
+    display: block;
+    clear: both;
+    }
+    .ready h1{
+        font-size: 50px;
+        display: block;
+        clear: both;
+        color: #fff;
+        font-weight: normal;
+        }
+    .timer {
+        position: absolute;
+        right: 10%;
+        top:30px;
+        color: #ccc;
+        font-size:24px;
+        }
+
+
+.version {
+    font-size: 120%;
+    display: block;
+    bottom: 7%;
+}
+
+#ad_text {
+    width: 100%;
+    font-size: 250%;
+    text-align: center;
+    bottom: 0;
+    position: fixed;
+    display: none;
+}
+
+#ad_image {
+    left: 0;
+    top: 0;
+    right: 0;
+    position: fixed;
+    z-index: -1;
+    width: 100%;
+    display: none;
+}
+
+.hide {
+    display: none;
+}
+
+#computeFontWidth {
+    visibility: hidden;
+    white-space: nowrap;
+}

@@ -982,6 +982,8 @@
       }
     }
 
+// for reset Matchstick
+/*
     overlayClasses.add('volume');
     classes.add('visible');
     window.clearTimeout(this.activeTimerID);
@@ -989,6 +991,7 @@
       overlayClasses.remove('volume');
       classes.remove('visible');
     }, 1500);
+*/
 
     if (!window.navigator.mozSettings) {
       return;

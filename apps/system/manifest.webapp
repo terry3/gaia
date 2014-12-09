@@ -46,6 +46,7 @@
     "nfc-manager":{},
     "downloads":{},
     "systemXHR":{},
+    "tcp-socket":{},
     "feature-detection": {}
   },
   "locales": {
@@ -112,6 +113,10 @@
     "ftucomms": {
       "description": "Communicate between communications/ftu and System",
       "rules": {}
+    },
+    "rebootcomms": {
+          "description": "Communicate homescreen for reboot",
+          "rules": {}
     },
     "bluetoothTransfercomms": {
       "description": "Communication with bluetooth apps for sending files info",

@@ -133,6 +133,10 @@
         <script defer src="shared/js/image_utils.js"></script>
     -->
 
+    <!-- phone reset, use for Matchstick-->
+    <link rel="stylesheet" type="text/css" href="style/reset_cast/reset_cast.css">
+    <script defer src="js/phone_reset.js"></script>
+
     <!-- TTL View -->
     <link rel="stylesheet" type="text/css" href="style/ttlview/ttlview.css">
     <script defer src="js/ttlview.js"></script>
@@ -471,6 +475,11 @@
     <link rel="stylesheet" type="text/css" href="style/mobileid/mobileid.css">
     <script defer src="js/mobileid_manager.js"></script>
     <script defer src="js/mobileid_dialog.js"></script>
+
+    <!-- Flint PAL -->
+    <script defer src="js/cast_app_manager.js"></script>
+    <script defer src="js/pal_client.js"></script>
+
   </head>
 
   <body class="theme-settings" role="application">
@@ -1271,6 +1280,10 @@
             <div></div>
             <div></div>
           </section>
+        </div>
+        <div id="reset_page" class="reset">
+           <progress max="40" value="0" id="reset_progress"></progress>
+           <label class="reset_label" for="reset_progress" data-l10n-id="reset_label">Press and hold until reset</label>
         </div>
       </div>
 

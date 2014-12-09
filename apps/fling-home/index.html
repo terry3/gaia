@@ -1,0 +1,170 @@
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+    <title>home</title>
+    <script type="text/javascript" src="shared/js/l10n.js"></script>
+    <script defer src="shared/js/iac_handler.js"></script>
+    <link rel="resource" type="application/l10n" href="locales/locales.ini">
+    <link rel="stylesheet" type="text/css" href="style/index.css"/>
+</head>
+<body>
+<div class="wrapper">
+
+    <div id="setup_page" class="hide">
+        <header> 
+            <h3 class="page_title" data-l10n-id="cast_setup">set me up</h3>
+            <p class="explanation" data-l10n-id="setup_visit">From your phone,tablet or laptop,visit: <span class="text-primary" data-l10n-id="setup_visit_site">matchstick.tv/setup</span></p>
+        </header>
+        <div class="illustrate">
+            <img class="middle_one" src="style/images/ic_phone.png"/>
+            <img class="middle_two" src="style/images/ic_pad.png"/>
+            <img class="middle_two" src="style/images/ic_computer.png"/>          
+        </div>
+        <footer>
+            	<dl>
+    	        	<dt><img src="style/images/cast_on.png" /></dt>
+    	        	<dd id="setup_ssid" class="device_name">MatchStick</dd>
+                </dl>
+            	<div class="ms_logo"><img src="style/images/logo.png" /></div>
+        </footer>   
+    </div>
+    
+    <div id="await_page" class="hide">
+        <header>
+            <h1 class="page_title" data-l10n-id="cast_setup">Setup</h1>
+            <p id="await_ssid_name" data-l10n-id="cast_wait">MatchStick is waiting for instructions</p>
+        </header>
+		<div class="key_code">T4N8</div>
+        <footer>
+			<dl>
+				<dt><img src="style/images/cast_on.png" /></dt>
+				<dd id="await_ssid" class="device_name">MatchStick</dd>
+			</dl>
+        	<div class="ms_logo"><img src="style/images/logo.png" /></div>
+        </footer>
+    </div>
+    
+    <div id="connect_page" class="hide">
+        <header>
+            <h1 class="page_title" id="connect_text" data-l10n-id="connect_wifi">Connecting</h1>
+            <p id="connect_ssid_name" data-l10n-id="connect_status">MatchStick is connecting to Wi-Fi network</p> 
+        </header>
+        <div class="key_code">T4N8</div>
+        <footer >
+        	<dl>
+	        	<dt><img src="style/images/cast_on.png" /></dt>
+	        	<dd id="connect_ssid" class="device_name">MatchStick</dd>
+			    <dd>
+                    <span id="connect_wifi_name">WIFI-Router</span> 
+                    <img src="style/images/wifi_signal_0.png" />
+                </dd>	
+        	</dl>
+        	<div class="ms_logo"><img src="style/images/logo.png" /></div>       	
+        </footer>  
+    </div>
+    
+    <div id="reconnect_page" class="hide">
+        <header>
+            <h1 class="page_title" data-l10n-id="cast_reconnect">Reconnect</h1>
+            <p id="reconnect_ssid_name" data-l10n-id="reconnect_status">MatchStick cannot find Wi-Fi network</p>
+
+            <div class="tooltip bottom">
+                <div class="tooltip-arrow"></div>
+                <div id="reconnect_help" class="tooltip-inner">
+                    <span id="reconnect_help_one" data-l10n-id="reconnect_help_one">Please run the MatchStick APP to connect to a new network</span>
+                    <span id="reconnect_help_two" data-l10n-id="reconnect_help_two">Or try to reconnct to the network</span>
+                </div>
+            </div>   
+        </header>
+        
+        <div class="key_code">T4N8</div>
+        
+        <footer class="footer">
+        	<dl>
+	        	<dt><img src="style/images/cast_on.png" /></dt>
+	        	<dd id="reconnect_ssid" class="device_name">MatchStick</dd>
+			    <dd>
+                    <span id="reconnect_wifi_name">WIFI-Router</span> 
+                    <img src="style/images/wifi_signal_0.png" />
+                </dd>
+        	</dl>
+        	<div class="ms_logo"><img src="style/images/logo.png" /></div>   	
+        </footer>
+    </div>
+
+
+    <div id="connectfail_page" class="hide">
+        <header>
+            <h1 class="page_title" data-l10n-id="cast_connectfail">Reconnect</h1>
+            <p id="connectfail_ssid_name" data-l10n-id="connectfail_status">MatchStick cannot connect to Wi-Fi</p>
+            <div class="tooltip bottom">
+                <div class="tooltip-arrow"></div>
+                <div id="connectfail_help" class="tooltip-inner">
+                    <span id="connectfail_help_one" data-l10n-id="connectfail_help_one">Please run the MatchStick APP to confirm your Wi-Fi password</span>
+                </div>
+            </div>   
+        </header>
+                
+        <div class="key_code">T4N8</div>
+        
+        <footer>
+        	<dl>
+	           <dt><img src="style/images/cast_on.png" /></dt>
+	           <dd id="connectfail_ssid" class="device_name">MatchStick</dd>
+			   <dd>
+                    <span id="connectfail_wifi_name">WIFI-Router</span> 
+                    <img src="style/images/wifi_signal_0.png" />
+                </dd>  	
+        	</dl>
+        	<div class="ms_logo"><img src="style/images/logo.png" /></div>
+        </footer>    
+        
+    </div>
+
+
+
+
+
+
+
+    <div id="ready_page" class="">
+        <header class="ready">
+            <h1 data-l10n-id="cast_ready">Ready to Fling</h1>
+            <p data-l10n-id="ready_visit">Learn more at: <span class="text-primary" data-l10n-id="learn_visit_site">matchstick.tv</span></p>
+        </header>
+        
+        <div id="ready_show_time" class="timer"></div>
+        
+        <footer>
+        	<dl>
+	        	<dt><img id="ready_cast_icon" src="style/images/cast_on.png" /></dt>
+	        	<dd id="ready_ssid" class="device_name">MatchStick</dd>
+	        	<dd>
+                    <span id="ready_wifi_name">WIFI-Router</span> 
+                    <img id="ready_wifi_icon" src="style/images/wifi_signal_4.png" />
+                </dd>
+        	</dl>
+        	<div class="ms_logo"><img src="style/images/logo.png" /></div>
+        </footer>    
+        
+        
+    </div>
+    
+    
+    
+    
+    
+    
+</div>
+<!--div id="version_ota" class="footer version"></div-->
+<span id="computeFontWidth"></span>
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript" src="js/fling_utils.js"></script>
+<script type="text/javascript" src="js/netcast_db.js"></script>
+<script type="text/javascript" src="js/page_helper.js"></script>
+<script type="text/javascript" src="js/network_helper.js"></script>
+<script type="text/javascript" src="js/connection_service.js"></script>
+<script defer type="text/javascript" src="js/ota_client.js"></script>
+</body>
+</html>
