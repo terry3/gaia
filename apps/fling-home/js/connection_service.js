@@ -270,6 +270,12 @@ var ConnectService = (function () {
                 } else if (message.type == "reboot_cast") { // reboot
                     handleRebootPhone();
 
+                } else if (message.type == 'time_set') {  // set time
+                    var tm = message['time'];
+                    console.log("message.type time_set: " + tm);
+                    if (null != tm) {
+                        handleTimeSet(tm);
+                    }
                 } else if (message.type == 'time_zone') {  // change timezone
                     var tz = message['timezone'];
                     if (null != tz) {
@@ -428,9 +434,35 @@ var ConnectService = (function () {
     }
 
     /**
+     * Set device's time. 
+     * Time format: MM dd,yyyy hh:mm:ss
+     *
+     * @param tm
+     */
+    function handleTimeSet(tm) {
+        console.log("handle time: " + tm);
+        
+        if (tm == null) {
+            console.log("handle time is null.");
+            return;
+        }
+
+        var createDT = new Date(tm);
+        console.log("handle time: set " + createDT);
+
+        var _mozTime = window.navigator.mozTime;
+        if (!_mozTime) {
+            console.error('Could not get window.navigator.mozTime');
+            return;
+        }
+        _mozTime.set(createDT);
+    }
+
+    /**
      * Set device's timezone
      *
      * @param tz
+     * @param reload
      */
     function handleTimezoneSet(tz, reload) {
         console.log("handle timezone:" + tz);
@@ -1143,13 +1175,13 @@ var ConnectService = (function () {
         if (!language) {
             return;
         }
-        var _language = timezone.trim();
+        var _language = language.trim();
         console.log("device language:" + language + "->" + typeof(language));
         if (!_language) {
             var lreq = settings.createLock().get('language.current');
             lreq.onsuccess = function () {
                 language = lreq.result['language.current'];
-                console.log("device timezone:" + language);
+                console.log("device language:" + language);
             }
         }
 
