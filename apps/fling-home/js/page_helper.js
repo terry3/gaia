@@ -19,6 +19,7 @@ var cast_socket = null;
 var requestId = 0;
 var send_faile_event = null;
 var ip;
+var current_page_index = -1; // remember current page index. -1 means unknown
 var PageHelper = {
     PAGE_STATUS : {
         setup_page:1,
@@ -37,6 +38,12 @@ var PageHelper = {
         document.querySelector("#reconnect_page"),
         document.querySelector("#connectfail_page")
     ],
+
+    // get current page index
+    getCurrentPage: function () {
+        return current_page_index + 1;
+    },
+
     //Skip page to index.
     skipPage: function (index) {
         console.log("page index: " + index);
@@ -68,6 +75,7 @@ var PageHelper = {
             context.startCheckNetworkStatus();
         }
 
+        current_page_index = index;
     },
 
     network_change: function (st) {
