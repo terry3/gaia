@@ -315,7 +315,13 @@ var ConnectService = (function () {
                     PageHelper.setKeyCodeElement(code);
 
                     console.log(" query key code configState: " + configState);
-                    if (configState == null) {
+                    if (configState == null || PageHelper.getCurrentPage() == PageHelper.PAGE_STATUS.reconnect_page || PageHelper.getCurrentPage() == PageHelper.PAGE_STATUS.connectfail_page) {
+                        if (apScanTimer != undefined && apScanTimer != null) {
+                            console.log("ready to setup dongle?clear auto re-connect timer!");
+                            clearInterval(apScanTimer);
+                            apScanTimer = undefined;
+                            aplastScanDate = 0;
+                        }
                         PageHelper.skipPage(PageHelper.PAGE_STATUS.await_page);
                     }
 
@@ -753,6 +759,8 @@ var ConnectService = (function () {
                 var _bssid;
                 var _security;
 
+                console.log("Auto scan: check networks...");
+
                 for (var i in networkaps) {
 
                     //console.log(networkaps[i].bssid + "-->" + networkaps[i].ssid + "--!");
@@ -763,7 +771,7 @@ var ConnectService = (function () {
                     if (_bssid && _bssid == bssid
                         && _ssid && _ssid == connectssid
                         && _security && _security == type) {
-                        //        console.log(_bssid + ":" + bssid);
+                        console.log("Auto scan: found:" + bssid);
                         handleWifiSet(connectssid, bssid, type, password, ishidden);
                         return;
                     }
