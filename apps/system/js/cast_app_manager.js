@@ -25,7 +25,7 @@ var CastAppManager = (function () {
     if (command == 'LAUNCH_RECEIVER') {
       if (appStr && (appStr).indexOf('http') == 0) {
         startCastAppContainer(appStr);
-      } else if (appStr && appStr.index('app:?') == 0) {
+      } else if (appStr && appStr.indexOf('app:?') == 0) {
         startNativeApp(appStr.slice(5));
       }  else if (message.appUrl) {
         startCastAppContainer(message.appUrl);
@@ -33,7 +33,7 @@ var CastAppManager = (function () {
     } else if (command == 'STOP_RECEIVER') {
       if (appStr && (appStr).indexOf('http') == 0) {
         stopApplication(castAppConfig);
-      } else if (appStr && appStr.index('app:?') == 0) {
+      } else if (appStr && appStr.indexOf('app:?') == 0) {
         var nativeStr = message.app_info.url;
         var appPkg = nativeStr.slice(5);
         var prefix = 'app://';
