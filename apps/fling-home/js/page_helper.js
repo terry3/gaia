@@ -264,12 +264,6 @@ var PageHelper = {
                 'relSignalStrength  =', event.relSignalStrength, 'linkSpeed =', event.linkSpeed,
                 'ipAddress =', event.ipAddress, 'network =', event.network);
             update(event.relSignalStrength);
-            // updateIp(event.ipAddress);
-        };
-        function updateIp(ip) {
-            console.log('updateIp: ' +ip);
-            var readyWifiIp = document.getElementById('ready_wifi_ip');
-            readyWifiIp.innerHTML = ip;
         };
 
         function update(relSignalStrength) {
