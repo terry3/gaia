@@ -367,7 +367,7 @@ var ConnectService = (function () {
                     var backMessage = {
                         'command': '~query',
                         'type': 'device_info',
-                        'macAddress': macAddress,
+                        'macAddress': networkManager.macAddress,
                         'language': language,
                         'timezone': timezone,
                         'version': deviceVersion
