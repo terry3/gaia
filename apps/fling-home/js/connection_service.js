@@ -739,6 +739,47 @@ var ConnectService = (function () {
     }
 
     /**
+     * This function is used to validate current Ap name, if current AP name is invalid(emtpy,etc), then we set a default one.
+     */
+    function fixupApState() {
+        console.log("fixupApState!network enabled?[" + networkManager.enabled + "]");
+        var lock = settings.createLock();
+        var hotspot = lock.get('tethering.wifi.ssid');
+
+        hotspot.onsuccess = function () {
+            console.log('OK! tethering.wifi.ssid[' + hotspot.result['tethering.wifi.ssid'] + "]deviceName[" + deviceName + "]");
+
+/*
+            var apName = hotspot.result['tethering.wifi.ssid'];
+            if (apName == null || apName.trim() == null || apName.trim().length == 0 ) {
+                console.log("fixupApState: ap name is empty???" );
+                if (deviceName == null || deviceName.length == 0) {
+                    var num = "";
+                    for (var i = 0; i < 4; i++) {
+                        num += Math.floor(Math.random() * 10);
+                    }
+
+                    apName = 'MatchStick' + num;
+                } else {
+                    apName = deviceName;
+                }
+
+                console.log("fixupApState: change name to " + apName);
+
+                handleNameSet(apName);
+
+                networkHelper.openWifi();
+                networkHelper.openHotspot("!fail");
+            }
+*/
+        };
+
+        hotspot.onerror = function () {
+            console.error("fixupApState: An error occured!");
+        };
+    }
+
+    /**
      * Periodicly (10s) auto open/connect wifi when it's in AP mode.
      *
      * When device entered AP mode, one interval timer will be set to auto connect wifi when wifi is available. we read those wifi info from a file stored on SDCARD.
@@ -770,7 +811,9 @@ var ConnectService = (function () {
                 var _bssid;
                 var _security;
 
-                console.log("Auto scan: check networks...");
+                console.log("Auto scan: check networks. bssid[" + bssid + "]connectssid[" + connectssid + "]type[" + type +"]deviceName[" + deviceName + "]networkaps[" + networkaps.length + "]");
+
+                fixupApState();
 
                 for (var i in networkaps) {
 
