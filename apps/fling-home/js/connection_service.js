@@ -80,6 +80,8 @@ var ConnectService = (function () {
     // handle AP set/reset events
     settings.addObserver('tethering.wifi.enabled', handleHotspotChange);
 
+    console.log("addEventListener moztimechange...");
+
     /**
      * Handle device time change events
      */
@@ -88,6 +90,7 @@ var ConnectService = (function () {
         if (timezoneChanged) {
             timezoneChanged = false;
         } else if (isOldTime) {
+            console.log("timechanged oldtime is true.");
             settings.createLock().set({
                 'time.clock.automatic-update.enabled': true
             });
@@ -112,13 +115,27 @@ var ConnectService = (function () {
 
     });
 
-    // reset current time
-    var oldTime = new Date();
-    oldTime.setFullYear(2014);
-    oldTime.setMonth(0);
-    console.log("oldTime:" + oldTime);
-    navigator.mozTime.set(oldTime);
-    isOldTime = true;
+    resetCurrentTime();
+
+    /**
+     * Reset current time.
+     *
+     * We need the event of 'moztimechange' to make sure that SNTP had updated the time.
+     * But we might missed the first event, so we reset the time to receive the event again.
+     */
+    function resetCurrentTime() {
+        var oldTime = new Date();
+        oldTime.setFullYear(2014);
+        oldTime.setMonth(0);
+        oldTime.setDate(1);
+        oldTime.setHours(0);
+        oldTime.setMinutes(0);
+        oldTime.setSeconds(0);
+        oldTime.setMilliseconds(0);
+        console.log("resetCurrentTime: " + oldTime);
+        navigator.mozTime.set(oldTime);
+        isOldTime = true;
+    }
 
     /**
      * notify flingd/castd about current wifi ssid name
