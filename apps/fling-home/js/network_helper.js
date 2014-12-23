@@ -330,7 +330,7 @@ var networkHelper = {
     },
 
     openHotspot: function(configState) {
-        console.log("open hotspot");
+        console.log("open hotspot!");
         if (undefined != configState && null != configState) {
             if (configState == 'fail'){
                 PageHelper.skipPage(6);
@@ -343,17 +343,12 @@ var networkHelper = {
         var hotspot = lock.get('tethering.wifi.enabled');
 
         hotspot.onsuccess = function() {
-            if (false == hotspot.result['tethering.wifi.enabled']) {
-                lock.set({
-                    'tethering.wifi.enabled': true
-                });
-            } else {
-                console.log("tethering enabled");
-            }
+            console.log("tethering enabled!");
+            lock.set({'tethering.wifi.enabled': true});
         };
 
         hotspot.onerror = function() {
-            console.log("hotspot open error");
+            console.log("hotspot open error!");
         };
     }
 };
