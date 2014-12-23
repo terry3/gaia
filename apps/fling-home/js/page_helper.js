@@ -259,7 +259,7 @@ var PageHelper = {
         if (!wifiStatusUI) {
             return;
         }
-        navigator.mozWifiManager.onconnectionInfoUpdate = function(event) {
+        navigator.mozWifiManager.onconnectioninfoupdate = function(event) {
             console.log('WiFi Status:', 'signalStrength =', event.signalStrength,
                 'relSignalStrength  =', event.relSignalStrength, 'linkSpeed =', event.linkSpeed,
                 'ipAddress =', event.ipAddress, 'network =', event.network);
