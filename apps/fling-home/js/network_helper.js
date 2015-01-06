@@ -291,7 +291,7 @@ var networkHelper = {
 
     openWifi: function() {
         console.log("open wifi");
-        this.closeHotspot();
+        //this.closeHotspot();
         var settings = window.navigator.mozSettings;
         var wifi = settings.createLock().set({
             'wifi.enabled': true,
@@ -316,11 +316,12 @@ var networkHelper = {
 
         hotspot.onsuccess = function() {
             if (true == hotspot.result['tethering.wifi.enabled']) {
+                console.log("tethering disenabled!");
                 lock.set({
                     'tethering.wifi.enabled': false
                 });
             } else {
-                console.log("tethering disenabled");
+                console.log("tethering already disenabled");
             }
         };
 
@@ -338,13 +339,18 @@ var networkHelper = {
                 PageHelper.skipPage(5);
             }
         }
-        this.closeWifi();
+        //this.closeWifi();
         var lock = window.navigator.mozSettings.createLock();
         var hotspot = lock.get('tethering.wifi.enabled');
 
         hotspot.onsuccess = function() {
             console.log("tethering enabled!");
-            lock.set({'tethering.wifi.enabled': true});
+            if (false == hotspot.result['tethering.wifi.enabled']) {
+              console.log("tethering enabled!");
+              lock.set({'tethering.wifi.enabled': true});
+            } else {
+              console.log("tethering already enabled!");
+            }
         };
 
         hotspot.onerror = function() {
