@@ -1314,6 +1314,10 @@ var ConnectService = (function () {
                         'tethering.wifi.security.type': 'open'
                     });
 
+                    // set init device name, then we notify flingd
+                    deviceName = castName;
+                    notifyNameChanged();
+
                     handleTimezoneSet("Asia/Shanghai", false);
                     code = genKeyCode();
                     var storeObj = {
