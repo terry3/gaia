@@ -227,6 +227,24 @@ var PageHelper = {
         var context = this;
         context.checkWifiStatus();
         context.stopCheckNetworkStatus();
+        check();
+        checkNetworkInterval = setInterval(check, ConstantUtils.CHECK_NETWORK_TIME / 2);
+	function check() {
+	    var internetStatusUI = document.querySelector("#internet_status");
+	    ConstantUtils.isNetAvailable(function () {
+		if (internetStatusUI) {
+                    if (internetStatusUI.style.display!="none") {
+                        internetStatusUI.style.display="none";
+                    }
+                }
+            }, function () {
+                if (internetStatusUI) {
+                    if (internetStatusUI.style.display!="block") {
+                        internetStatusUI.style.display="block";
+                    }
+                }
+            }, ConstantUtils.CHECK_NETWORK_TIME / 2 - 2000);
+	}
         //In the design of the new UI,Deleted the "internet_status" function,so comment the following js code.
         /*check();
         checkNetworkInterval = setInterval(check, ConstantUtils.CHECK_NETWORK_TIME / 2);

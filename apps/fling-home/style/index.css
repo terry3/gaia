@@ -55,7 +55,12 @@ p{
     border-width: 0 8px 8px;
     border-bottom-color: #c16a10;
 }
-
+.tooltip.top .tooltip-arrow {
+bottom: -7px;
+left: 20px;
+border-width: 8px 8px 0;
+border-top-color: #c16a10;
+}
 
 .wrapper {
     margin: 5% 10% 0;
@@ -136,7 +141,12 @@ footer {
         float: right; 
         margin-top: 30px;
         }           
-
+footer .tooltip{
+        position: absolute;
+        bottom: 120px;
+        margin-left: 150px;
+        font-size: 16px;
+    }
 
 
 .ready {
