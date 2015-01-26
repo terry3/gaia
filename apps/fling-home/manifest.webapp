@@ -1,7 +1,7 @@
 {
   "fullscreen": "true",
   "name": "Homescreen",
-  "description": "Matchstick Homescreen",
+  "description": "Dongle Homescreen",
   "launch_path": "/index.html#root",
   "type": "certified",
   "role": "homescreen",

@@ -808,7 +808,7 @@ var ConnectService = (function () {
                         num += Math.floor(Math.random() * 10);
                     }
 
-                    apName = 'MatchStick' + num;
+                    apName = 'Dongle' + num;
                 } else {
                     apName = deviceName;
                 }
@@ -1335,7 +1335,7 @@ var ConnectService = (function () {
                     for (var i = 0; i < 4; i++) {
                         num += Math.floor(Math.random() * 10);
                     }
-                    castName = 'MatchStick' + num;
+                    castName = 'Dongle' + num;
                     console.log("castName:" + castName);
 
                     var name = settings.createLock().set({

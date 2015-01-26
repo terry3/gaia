@@ -119,7 +119,7 @@ var PageHelper = {
     setElement: function (castName, ssid) {
         const ellipsis = "...";
         if (!castName || "string" != typeof castName) {
-            castName = "MatchStick";
+            castName = "Dongle";
         }
         if (!ssid || "string" != typeof ssid) {
             ssid = "Wi-Fi"
