@@ -94,7 +94,7 @@ var PageHelper = {
     },
 
     showTime: function () {
-        function showTime() {
+        function showTimeInternal() {
             var now = new Date();
             var hours = now.getHours();
             var minutes = now.getMinutes();
@@ -107,7 +107,11 @@ var PageHelper = {
             clearInterval(refreshTimer);
             refreshTimer = null;
         }
-        refreshTimer = setInterval(showTime, 1000);
+
+        // show it now
+        showTimeInternal();
+
+        refreshTimer = setInterval(showTimeInternal, 10000); // 10s?
     },
 
     setElement: function (castName, ssid) {
