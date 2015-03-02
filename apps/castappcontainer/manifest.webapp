@@ -59,5 +59,12 @@
     "wifi-manage": {}, 
     "tcp-socket": {}
   },
+  "connections": {
+    "home-app-cmd": {
+      "rules": {},
+      "description": "Handle commands from PAL"
+    }
+  },
+
   "description": "Cast App Container"
 }

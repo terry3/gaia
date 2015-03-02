@@ -9,7 +9,28 @@
     var load_timeout = true;
     var loadtimer = null;
     var error_wait = '';
+    var network_connected = '';
+    var network_disconnect = '';
+    var network_connecting = '';
+    var network_connect_failed = '';
+    var ssid='';
+    var networkManager = navigator.mozWifiManager;
 
+    var networkBox = {
+        "init": function () {
+            this.network = document.getElementById("network");
+            this.network_text = document.getElementById('network_text');
+        },
+        "show": function (text) {
+            this.init();
+            this.network_text.innerHTML = text;
+            this.network.className = "network_status";
+        },
+        "hide": function () {
+            this.init();
+            this.network.className = "network_status hide";
+        }
+    };
     var alertBox = {
         "init": function () {
             this.alert = document.getElementById("alert");
@@ -48,12 +69,38 @@
         }, 15 * 1000);
     }
 
+    function handleHomeCommand(event) {
+        console.log('handle home command: ' + event.detail);
+        try {
+            var port = IACHandler.getPort('home-app-cmd');
+        } catch (error) {
+            console.log(error.toString());
+        }
+        var command = event.detail[0];
+
+        if (command === 'close') {
+            console.log('close self');
+            window.close();
+        } else if (command === 'connect') {
+            ssid = event.detail[1];
+            console.log('connect to: ' + ssid);
+        } else {
+            console.error('error command: ' +command)
+        }
+    }
+
     function init() {
         appContainerFrame = document.getElementById('app_container');
+        window.addEventListener('iac-home-app-cmd', handleHomeCommand);
 
         var mozL10n = navigator.mozL10n;
         mozL10n.ready(function () {
-          error_wait = navigator.mozL10n.get('network-wait');
+            error_wait = navigator.mozL10n.get('network-wait');
+            network_connected = navigator.mozL10n.get('network-connected');
+            network_connect_failed = navigator.mozL10n.get('network-connect-failed');
+            network_disconnect = navigator.mozL10n.get('network-connect-disconnect');
+            network_connecting = navigator.mozL10n.get('network-connecting');
+
         });
         var iframeEvents = ['loadstart', 'loadend', 'locationchange',
             'titlechange', 'iconchange', 'contextmenu',
@@ -75,6 +122,25 @@
                 break;
         }
     }
+
+    networkManager.onstatuschange = function (event) {
+        console.log('network status change: ' + event.status + ', network enabled: ' + networkManager.enabled);
+        if (event.status == 'connected') {
+            networkBox.show(network_connected);
+            window.setTimeout(function () {
+                networkBox.hide();
+            }, 1000);
+        } else if (event.status == 'connectingfailed' && networkManager.enabled) {
+            networkBox.show(network_connect_failed);
+            window.setTimeout(function () {
+                networkBox.hide();
+            }, 1000);
+        } else if (event.status == 'associated' || event.status == 'connecting') {
+            networkBox.show(network_connecting +' ' + ssid);
+        } else if (event.status == 'disconnected' && networkManager.enabled) {
+            networkBox.show(network_disconnect);
+        }
+    };
 
     window.onload  = function () {
       init();
