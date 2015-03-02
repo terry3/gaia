@@ -24,6 +24,14 @@ var ConnectService = (function () {
         }
     });
 
+    var castAppConfig = {
+        'isActivity': false,
+        'url': 'app://castappcontainer.gaiamobile.org/index.html',
+        'name': 'CastAppContainer',
+        'manifestURL': 'app://castappcontainer.gaiamobile.org/manifest.webapp',
+        'origin': 'app://castappcontainer.gaiamobile.org'
+    };
+
     var WIFI_CONFIG_STATE = {
         CONFIGURING: 'configuring',
         FAIL: 'fail',
@@ -277,6 +285,13 @@ var ConnectService = (function () {
                     }
                     handleWifiSet(connectssid, bssid, type, password, ishidden);
 
+                    ConstantUtils.isNetAvailable(function () {
+                        notifyAppContainer(['connect', connectssid],'home-app-cmd')
+                    }, function () {
+                        console.log('network not available close app container');
+                        notifyAppContainer(['close', ''],'home-app-cmd');
+                    }, ConstantUtils.CHECK_NETWORK_TIME / 2 - 2000);
+
                 } else if (message.type == "connect_ap") {
 
                     macAddress = message['ap_mac'];
@@ -400,6 +415,23 @@ var ConnectService = (function () {
             }
         }
 
+    }
+
+    function notifyAppContainer(data,cmd) {
+        navigator.mozApps.getSelf().onsuccess = function (event) {
+            var app;
+            app = event.target.result;
+            console.log("ready to connect app");
+            if (app.connect !== null) {
+                (app.connect(cmd)).then(function (ports) {
+                    ports.forEach(function (port) {
+                        port.postMessage(data);
+                    });
+                }, function (reason) {
+                    console.log("pal:", "failed to connect to " + cmd + " " + reason);
+                });
+            }
+        };
     }
 
     /**
