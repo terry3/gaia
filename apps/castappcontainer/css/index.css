@@ -39,12 +39,12 @@ body {
 
 .network_status {
     position: absolute;
-    left: 100%;
-    top: 0%;
+    right: 10%;
+    top: 30px;
     width: 300px;
     height: 40px;
     margin-left: -300px;
-    color: #FFF;
+    color: #c16a10;
     font-size: 25px;
 }
 
