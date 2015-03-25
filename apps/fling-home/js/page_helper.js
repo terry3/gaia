@@ -53,7 +53,7 @@ var PageHelper = {
 
         if (index == this.PAGE_STATUS.ready_page) {
             this.network_change('station');
-        } else if (index == this.PAGE_STATUS.reconnect_page || index == this.PAGE_STATUS.connectfail_page) {
+        } else if (index == this.PAGE_STATUS.setup_page || index == this.PAGE_STATUS.reconnect_page || index == this.PAGE_STATUS.connectfail_page) {
             this.network_change('ap');
         }
 
