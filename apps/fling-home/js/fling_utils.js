@@ -40,7 +40,9 @@ var flingUtils = (function () {
 
   var flingdStatusChange = function (message) {
     if (flingSocket !== null && flingSocket.readyState === "open") {
-      flingSocket.send(message.length + ":" + message);
+      window.setTimeout(function () {
+          flingSocket.send(message.length + ":" + message);
+      }, 1000);
     }
   };
 
