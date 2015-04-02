@@ -61,6 +61,10 @@ var PageHelper = {
         if (index < 0 || index > 5) {
             return;
         }
+
+        // save current page index.
+        current_page_index = index;
+
         const READY_PAGE_INDEX = 3;
         var context = this;
         for (var i = 0; i < context.page.length; i++) {
@@ -74,8 +78,6 @@ var PageHelper = {
             //Check internet status.
             context.startCheckNetworkStatus();
         }
-
-        current_page_index = index;
     },
 
     network_change: function (st) {
