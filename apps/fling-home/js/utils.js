@@ -56,7 +56,9 @@ var ConstantUtils = {
             console.log("Default callback: Internet is not available!");
         };
         var mTimeout = timeout || context.CHECK_NETWORK_TIME;
-        if (!Array.isArray(context.CHECK_NETWORK_SERVER) && context.CHECK_NETWORK_SERVER.length <= 0) {
+
+        // when current displayed page is in disconnected status. does not send PING.
+        if ((!Array.isArray(context.CHECK_NETWORK_SERVER) && context.CHECK_NETWORK_SERVER.length <= 0) || PageHelper.getCurrentPage() != PageHelper.PAGE_STATUS.ready_page) {
             nCallback();
             return;
         }
