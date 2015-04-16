@@ -148,5 +148,6 @@
         var option = activityRequest.source;
         launchCastApp(option.data.url);
       });
+      document.getElementById("app_container").focus();
     }
 })();
