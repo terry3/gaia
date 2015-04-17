@@ -53,8 +53,12 @@ var PageHelper = {
 
         if (index == this.PAGE_STATUS.ready_page) {
             this.network_change('station');
+            ConstantUtils.startCastAppContainer("http://unixpapa.com/js/testkey.html");
         } else if (index == this.PAGE_STATUS.setup_page || index == this.PAGE_STATUS.reconnect_page || index == this.PAGE_STATUS.connectfail_page) {
             this.network_change('ap');
+            ConstantUtils.notifyAppContainer(['close', ''],'home-app-cmd');
+        } else {
+            ConstantUtils.notifyAppContainer(['close', ''],'home-app-cmd');
         }
 
         index = parseInt(index) - 1;
@@ -69,6 +73,9 @@ var PageHelper = {
         var context = this;
         for (var i = 0; i < context.page.length; i++) {
             if (i == index) {
+                if ((index+1) == this.PAGE_STATUS.ready_page) {
+                    continue;
+                }
                 context.page[i].style.display = "block";
             } else {
                 context.page[i].style.display = "none";

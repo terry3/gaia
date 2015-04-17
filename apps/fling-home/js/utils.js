@@ -250,6 +250,34 @@ var ConstantUtils = {
 
     htmlEncode: function (str) {
         return str.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/  /g, '&nbsp;');
-    }
+    },
 
+    startCastAppContainer: function (appUrl) {
+        console.log('pal:', 'Start receiver app, url = ' + appUrl);
+        window.setTimeout(function () {
+            var app = new MozActivity({
+                name: 'launch-receiver',
+                data: {
+                    type: 'url',
+                    url: appUrl
+                }
+            });
+        }, 200);
+    },
+    notifyAppContainer: function (data,cmd) {
+        navigator.mozApps.getSelf().onsuccess = function (event) {
+            var app;
+            app = event.target.result;
+            console.log("ready to connect app");
+            if (app.connect !== null) {
+                (app.connect(cmd)).then(function (ports) {
+                    ports.forEach(function (port) {
+                        port.postMessage(data);
+                    });
+                }, function (reason) {
+                    console.log("pal:", "failed to connect to " + cmd + " " + reason);
+                });
+            }
+        };
+    }
 };
