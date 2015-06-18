@@ -84,6 +84,9 @@
         } else if (command === 'connect') {
             ssid = event.detail[1];
             console.log('connect to: ' + ssid);
+        } else if (command === 'reload') {
+            console.log('reload url  to: ' + event.detail[1]);
+            launchCastApp(event.detail[1]);
         } else {
             console.error('error command: ' +command)
         }

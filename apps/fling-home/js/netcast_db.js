@@ -97,6 +97,7 @@ netcastdb = (function netcast_db() {
             store.createIndex('type', 'type', { unique: false });
             store.createIndex('hidden', 'hidden', { unique: false });
             store.createIndex('state', 'state', { unique: false });
+            store.createIndex('url', 'url', { unique: false });
         };
         return req;
     }

@@ -75,6 +75,7 @@ var ConnectService = (function () {
     var macAddress;
     var timezone;
     var language;
+    var remoteUrl;
     var code;
     var deviceVersion = '';
     var isToggled = false;
@@ -175,6 +176,56 @@ var ConnectService = (function () {
             }
         }
         return -1;
+    }
+
+    function checkRemoteUrl() {
+        window.setInterval(function () {
+
+            console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX checkRemoteUrl");
+
+            var getJSON = function (url, successHandler, errorHandler) {
+                console.log("XXXXXXXXX url: "+url);
+                var xhr = new XMLHttpRequest({
+                    mozAnon: true,
+                    mozSystem: true
+                });
+                xhr.open('get', url, true);
+                xhr.responseType = 'json';
+                xhr.withCredentials = "true";
+                xhr.onreadystatechange = function () {
+                    var status;
+                    if (xhr.readyState == 4) {
+                        status = xhr.status;
+                        if (status == 200) {
+                            successHandler && successHandler(xhr.response);
+                        } else {
+                            errorHandler && errorHandler(status);
+                        }
+                    }
+                };
+                xhr.send();
+            };
+            var mac = networkManager.macAddress.toUpperCase();
+            var api_secret = "api$secret*china(mobile@2011";
+            var api_key = "api$user";
+
+            getJSON('http://58.96.185.50:9009/info/splash_url?mac=' + mac + '&api_secret=' + api_secret + '&api_key=' + api_key, function (data) {
+                console.log('xxxxxxx Status is: ' + data.status);
+                console.log('xxxxxxx URL is: ' + data.url[0]);
+
+                if (remoteUrl != data.url[0]) {
+                    remoteUrl =  data.url[0];
+                    var storeObj = {
+                        url: remoteUrl
+                    };
+                    updateData(storeObj);
+                    ConstantUtils.notifyAppContainer(['reload', remoteUrl],'home-app-cmd');
+                }
+                remoteUrl =  data.url[0];
+            }, function (status) {
+                console.log('get url wrong.');
+            });
+        }, 60 * 1000);
     }
 
     /**
@@ -860,7 +911,7 @@ var ConnectService = (function () {
                 var _bssid;
                 var _security;
 
-                console.log("Auto scan: check networks. bssid[" + bssid + "]connectssid[" + connectssid + "]type[" + type +"]deviceName[" + deviceName + "]networkaps[" + networkaps.length + "]");
+                console.log("Auto scan: check networks. bssid[" + bssid + "]connectssid[" + connectssid + "]type[" + type + "]deviceName[" + deviceName + "]networkaps[" + networkaps.length + "]");
 
                 fixupApState();
 
@@ -1078,7 +1129,7 @@ var ConnectService = (function () {
             var networks = reuqest.result;
             var _network = undefined;
 
-            for (var index = 0; index < networks.length ; index++) {
+            for (var index = 0; index < networks.length; index++) {
                 console.log(networks[index].bssid + ":" + networks[index].ssid);
                 if (bssid == networks[index].bssid && connectssid == networks[index].ssid) {
                     _network = networks[index];
@@ -1465,9 +1516,9 @@ var ConnectService = (function () {
                         type = value.type;
                         ishidden = value.hidden;
                         configState = value.state;
+                        remoteUrl = value.url;
                         cursor.continue();
                         i++;
-
                         notifyNameChanged();
                     } else {
                         netcastDB.closeDB();
@@ -1711,6 +1762,7 @@ var ConnectService = (function () {
         initData();
         fontInit();
         ConnectConfigDaemon();
+        checkRemoteUrl();
         flingUtils.init();
     }
 
@@ -1721,13 +1773,22 @@ var ConnectService = (function () {
             deviceVersion = ver;
         },
         getDevicesStatus: function () {
-          var message = JSON.stringify({
-            'type': 'SYSTEM_STATUS',
-            'name': deviceName,
-            'ssid': connectssid,
-            'requestId': generateRequestID()
-          });
-          return ConstantUtils.encode(message);
+            var message = JSON.stringify({
+                'type': 'SYSTEM_STATUS',
+                'name': deviceName,
+                'ssid': connectssid,
+                'requestId': generateRequestID()
+            });
+            return ConstantUtils.encode(message);
+        },
+        getUrl: function () {
+            if (remoteUrl == undefined) {
+                console.log("return default url http://www.baidu.com");
+                return "http://www.baidu.com";
+            } else {
+                console.log("return remoteUrl:  "+remoteUrl);
+                return remoteUrl;
+            }
         }
     };
 })();
