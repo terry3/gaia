@@ -24,12 +24,14 @@ var UtilityTray = {
 
   init: function ut_init() {
     var touchEvents = ['touchstart', 'touchmove', 'touchend'];
+    /*
     touchEvents.forEach(function bindEvents(name) {
       this.overlay.addEventListener(name, this);
       this.statusbarIcons.addEventListener(name, this);
       this.grippy.addEventListener(name, this);
       this.topPanel.addEventListener(name, this);
     }, this);
+    */
 
     window.addEventListener('screenchange', this);
     window.addEventListener('emergencyalert', this);
