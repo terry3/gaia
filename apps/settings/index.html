@@ -395,13 +395,13 @@
           <h2 data-l10n-id="networkAndConnectivity">Network &amp; Connectivity</h2>
         </header>
         <ul>
-          <li data-category="connectivity">
+          <li data-category="connectivity" hidden>
             <label class="pack-switch">
               <input id="airplaneMode-input" class="uninit" type="checkbox" disabled>
               <span id="menuItem-airplaneMode" class="menu-item" data-icon="airplane" data-l10n-id="airplaneMode">Airplane Mode</span>
             </label>
           </li>
-          <li>
+          <li hidden>
             <label class="pack-switch">
               <input name="geolocation.enabled" class="uninit" type="checkbox">
               <span id="menuItem-gps" class="menu-item" data-icon="location" data-l10n-id="geolocation">Geolocation</span>
@@ -413,31 +413,31 @@
               <small id="wifi-desc" class="menu-item-desc"></small>
             </a>
           </li>
-          <li id="simCardManager-settings" aria-disabled="true">
+          <li id="simCardManager-settings" aria-disabled="true" hidden>
             <a id="menuItem-simManager" class="menu-item" data-icon="sim" href="#sim-manager">
               <span data-l10n-id="simManager">SIM manager</span>
               <small id="simmanager-desc" class="menu-item-desc"></small>
             </a>
           </li>
-          <li id="call-settings" aria-disabled="true">
+          <li id="call-settings" aria-disabled="true" hidden>
             <a id="menuItem-callSettings" class="menu-item" data-icon="call" href="#call">
               <span data-l10n-id="callSettings">Call Settings</span>
               <small id="call-desc" class="menu-item-desc"></small>
             </a>
           </li>
-          <li id="messaging-settings" aria-disabled="true">
+          <li id="messaging-settings" aria-disabled="true" hidden>
             <a id="menuItem-messagingSettings" class="menu-item" data-icon="messages" href="#messaging">
               <span data-l10n-id="messagingSettings">Messaging Settings</span>
               <small id="messaging-desc" class="menu-item-desc"></small>
             </a>
           </li>
-          <li id="data-connectivity" data-category="connectivity" aria-disabled="true">
+          <li id="data-connectivity" data-category="connectivity" aria-disabled="true" hidden>
             <a id="menuItem-cellularAndData" class="menu-item" data-icon="signal-5" href="#carrier">
               <span data-l10n-id="cellularAndData">Cellular &amp; Data</span>
               <small id="data-desc" class="menu-item-desc"></small>
             </a>
           </li>
-          <li>
+          <li hidden>
             <a id="menuItem-bluetooth" class="menu-item" data-icon="bluetooth" href="#bluetooth">
               <span data-l10n-id="bluetooth">Bluetooth</span>
               <small id="bluetooth-desc" class="menu-item-desc"></small>
@@ -449,7 +449,7 @@
               <span id="menuItem-nfc" class="menu-item" data-icon="nfc" data-l10n-id="nfc">NFC</span>
             </label>
           </li>
-          <li>
+          <li hidden>
             <a id="menuItem-internetSharing" class="menu-item" data-icon="tethering" href="#hotspot">
               <span data-l10n-id="internetSharing">Internet Sharing</span>
               <small id="internetSharing-desc" class="menu-item-desc"></small>
@@ -458,9 +458,9 @@
         </ul>
 
         <header>
-          <h2 data-l10n-id="personalization">Personalization</h2>
+          <h2 data-l10n-id="personalization" hidden>Personalization</h2>
         </header>
-        <ul>
+        <ul hidden>
           <li>
             <a id="menuItem-sound" class="menu-item" data-icon="sound-max" href="#sound" data-l10n-id="sound">Sound</a>
           </li>
@@ -508,9 +508,9 @@
         </ul>
 
         <header>
-          <h2 data-l10n-id="accounts">Accounts</h2>
+          <h2 data-l10n-id="accounts" hidden>Accounts</h2>
         </header>
-        <ul>
+        <ul hidden>
           <li>
             <a id="menuItem-fxa" class="menu-item" data-icon="firefox" href="#fxa">
               <span data-l10n-id="fxa-accounts">Firefox Accounts</span>
@@ -526,9 +526,9 @@
         </ul>
 
         <header>
-          <h2 data-l10n-id="privacyAndSecurity">Privacy &amp; Security</h2>
+          <h2 data-l10n-id="privacyAndSecurity" hidden>Privacy &amp; Security</h2>
         </header>
-        <ul>
+        <ul hidden>
           <li>
             <a id="menuItem-screenLock" class="menu-item" data-icon="lock" href="#screenLock">
               <span data-l10n-id="screenLock">Screen Lock</span>
@@ -559,9 +559,9 @@
         </ul>
 
         <header>
-          <h2 data-l10n-id="storage">Storage</h2>
+          <h2 data-l10n-id="storage" hidden>Storage</h2>
         </header>
-        <ul>
+        <ul hidden>
           <li class="pack-split usb-item">
             <label class="pack-switch">
               <input class="usb-switch" data-ignore type="checkbox">
@@ -587,9 +587,9 @@
         </ul>
 
         <header>
-          <h2 data-l10n-id="device">Device</h2>
+          <h2 data-l10n-id="device" hidden>Device</h2>
         </header>
-        <ul>
+        <ul hidden>
           <li>
             <a id="menuItem-deviceInfo" class="menu-item" data-icon="info" href="#about">
               <span data-l10n-id="deviceInfo">Device Information</span>
@@ -628,7 +628,7 @@
           </li>
         </ul>
 
-        <header id="icc-mainheader">
+        <header id="icc-mainheader" hidden>
           <h2 data-l10n-id="operatorServices">Operator Services</h2>
         </header>
         <ul id="icc-entries">
