@@ -1,0 +1,42 @@
+html, body {
+  margin: 0;
+  background-color: #fff;
+}
+h1 {
+  font-family: arial, sans-serif;
+  font-size: 32px;
+  color: #fff;
+}
+.overlay {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  padding: 20px 50px 20px 50px;
+  background-color: #000;
+  opacity: 0.50;
+  z-index: 2;
+}
+.videoContainer {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+.videoContainer video {
+  width: 100%;
+  height: auto;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.inputContainer {
+
+}
+
+.btn {
+
+}
+
+.ipaddr {
+
+}

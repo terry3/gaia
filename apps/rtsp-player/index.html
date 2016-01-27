@@ -1,0 +1,31 @@
+<html>
+<head>
+  <title>Fling Simple Player</title>
+  <meta  charset=utf-8"/>
+  <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/player.css" >
+
+</head>
+
+<body>
+  <div class="overlay">
+    <h1 id="label"></h1>
+  </div>
+
+  <div class="inputContainer">
+    <p>Camera Ip:
+      <input type="text" id="ipaddr" />
+      <button id="btn" type="submit" >Play</button>
+    </p>
+  </div>
+
+  <div class="videoContainer">
+    <video id="media" src="http://10.240.8.41/mm-test/test-480p.mov" controls="controls" autoplay="true">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <script type="application/javascript" src="player.js"></script>
+
+</body>
+</html>
