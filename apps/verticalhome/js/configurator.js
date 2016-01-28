@@ -224,13 +224,17 @@
     getItems: function(role) {
       var items = {};
 
-      conf.grid.forEach(function forEachSection(section) {
-        section.forEach(function forEachItem(item) {
-          if (item.role === role) {
-            items[item.id] = item;
-          }
-        });
+      try {
+        conf.grid.forEach(function forEachSection(section) {
+          section.forEach(function forEachItem(item) {
+            if (item.role === role) {
+              items[item.id] = item;
+            }
+          });
       });
+      } catch (error) {
+
+      }
 
       return items;
     },

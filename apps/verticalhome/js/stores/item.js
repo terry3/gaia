@@ -98,7 +98,10 @@
 
     // To simplify the process, we order the apps first (SV apps in relative
     // order and at the beginning of the array)
-    orgEntries.sort(compareApps);
+    try {
+        orgEntries.sort(compareApps);
+    } catch (error){
+    }
 
     // After the sorting process, if the first element is not a SV app then
     // we only need to add them at the end of dstEntries
